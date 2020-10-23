@@ -1,0 +1,25 @@
+﻿.ulkesec {
+    margin-bottom: 20px;
+}
+
+.ulImportants {
+    padding: 0;
+}
+
+    .ulImportants li {
+        list-style: none;
+        float: left;
+        margin-right: 30px;
+    }
+
+        .ulImportants li label {
+            padding-left: 25px !important;
+        }
+
+.showEconomicCalendar {
+    padding: 10px
+}
+
+.economicdatepicker {
+    margin-bottom: 35px
+}

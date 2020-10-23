@@ -1,0 +1,51 @@
+﻿#koddostu-com-adblocker-engelleme {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.8);
+    z-index: 9999999;
+}
+
+    #koddostu-com-adblocker-engelleme #fsdsgag {
+        background: #f10007 url(http://4.bp.blogspot.com/-gsezolfgX2k/VsdCeH1SsrI/AAAAAAAA6eI/t1D0cZhCw6Q/s80/eafafefeafae.jpg) no-repeat 60px 16px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -140px;
+        margin-left: -100px;
+        width: 200px;
+        height: 290px;
+        border-radius: 3px;
+        -webkit-border-radius: 3px;
+        -webkit-box-shadow: 0 8px 17px 0 rgba(0,0,0,0.5);
+        box-shadow: 0 8px 17px 0 rgba(0,0,0,0.5);
+    }
+
+#fsdsgag div {
+    padding-top: 110px;
+    text-align: center;
+}
+
+    #fsdsgag div, #fsdsgag div b {
+        line-height: 18px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 15px;
+        color: #ffffff;
+    }
+
+        #fsdsgag div a.btaq {
+            display: inline-block;
+            padding: 7px 12px;
+            background: rgba(0,0,0,0.4);
+            color: white;
+            font-weight: bold;
+            border-radius: 3px;
+            -webkit-border-radius: 3px;
+            margin: 8px;
+            cursor: pointer;
+            text-decoration: none !important;
+            text-transform: uppercase;
+        }

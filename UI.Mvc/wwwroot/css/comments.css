@@ -1,0 +1,190 @@
+﻿.media-body p:nth-child(2) {
+    padding-right: 100px;
+    min-height: 36px;
+    margin-right: 5px;
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+ui-widget {
+    font-family: Verdana,Arial,sans-serif;
+    font-size: .8em;
+}
+
+.ui-widget-content {
+    background: #F9F9F9;
+    border: 1px solid #90d93f;
+    color: #222222;
+}
+
+.ui-dialog {
+    left: 0;
+    outline: 0 none;
+    padding: 0 !important;
+    position: absolute;
+    top: 0;
+}
+
+#success {
+    padding: 0;
+    margin: 0;
+}
+
+.ui-dialog .ui-dialog-content {
+    background: none repeat scroll 0 0 transparent;
+    border: 0 none;
+    overflow: auto;
+    position: relative;
+    padding: 0 !important;
+}
+
+.ui-widget-header {
+    background: #b0de78;
+    border: 0;
+    color: #fff;
+    font-weight: normal;
+}
+
+.ui-dialog .ui-dialog-titlebar {
+    padding: 0.1em .5em;
+    position: relative;
+    font-size: 1em;
+}
+
+
+.query-radio-button {
+    margin: -5px 0;
+}
+
+    .query-radio-button label {
+        padding-left: 25px !important;
+        padding-right: 10px;
+    }
+
+/* Anket Şıkları */
+.polloptions {
+    margin-top: 5px;
+}
+
+    .polloptions ul {
+        padding-left: 0;
+    }
+
+        .polloptions ul li {
+            display: block;
+            border: solid 1px #ddd;
+            padding: 5px 10px 0 10px;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+    .polloptions li .perc-back {
+        background: #d2dfe5;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 0%;
+        z-index: 9;
+    }
+
+    .polloptions li button {
+        float: right;
+        background: #007cb0;
+        border: none;
+        border-radius: 3px;
+        color: #fff;
+        padding: 0 30px;
+        font-size: 20px;
+        line-height: 40px;
+    }
+
+    .polloptions li input {
+        display: none;
+    }
+
+    .polloptions li label {
+        vertical-align: middle;
+        overflow: hidden;
+        z-index: 10;
+        color: black !important;
+        font-weight: 400 !important;
+        height: auto !important;
+    }
+
+        .polloptions li label:before {
+            overflow: hidden;
+            display: inline-block;
+            margin-right: 10px;
+            margin-top: 2px;
+            margin-left: 2px;
+            margin-bottom: -1px;
+        }
+
+    .polloptions li input[type=radio]:checked + label:before {
+        margin-top: 0;
+        margin-left: 0;
+        margin-bottom: -3px;
+        margin-right: 8px;
+        z-index: 99;
+    }
+
+    .polloptions li.correct label:before {
+        margin-top: 0;
+        margin-left: 0;
+        margin-bottom: -5px;
+        margin-right: 6px;
+    }
+
+    .polloptions li.correct input[type=radio]:checked + label:before {
+        margin-top: 0;
+        margin-left: 0;
+        margin-bottom: -5px;
+        margin-right: 6px;
+    }
+
+    .polloptions li .perc-number {
+        float: right;
+        color: black !important;
+        position: relative;
+        z-index: 10;
+    }
+
+.commenttext a {
+    color: #fbae1c !important;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.ui-state-active {
+    background-color: #b4d0fe;
+}
+
+#notificationCount {
+    font-weight: 800;
+    color: #fff;
+    background-color: red;
+    border-radius: 10px;
+    line-height: 10px;
+    margin-left: -7px;
+    margin-top: 8px;
+    position: absolute;
+    z-index: 99;
+    font-size: 11px;
+}
+
+.page-item.active .page-link {
+    background-color: #007bff;
+    border-color: #007bff;
+    color:white;
+}
+
+@media only screen and (max-width: 480px) {
+    .pagination {
+        float: left;
+    }
+}

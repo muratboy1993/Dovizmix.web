@@ -1,0 +1,109 @@
+﻿
+@import url(https://fonts.googleapis.com/css?family=Oswald);
+.widget {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    margin-bottom: 10px
+}
+
+.market-icon {
+    height: 75px;
+    width: 75px;
+    color: #FFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top-left-radius: 5px;
+}
+
+.market-info {
+    height: 75px;
+    width: 100%;
+    background: #FFF;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+    border-top-right-radius: 5px;
+    border-bottom: 3px solid #777;
+}
+.market-currency {
+    font-family: Oswald, sans-serif;
+    font-size: 24px;
+}
+
+.market-currency a:hover{
+    color:inherit!important;
+}
+
+.market-update-date {
+    font-size: 14px;
+    font-family: "Oswald", sans-serif;
+}
+
+
+
+    .market-info span {
+        margin: 0;
+        padding: 0;
+        font-size: 14px;
+    }
+
+
+
+#sabitMenu {
+    /*box-shadow: 0px 0px 8px #c7b985;
+        height: 30px;
+        display: inline-block;
+        width: 100%;
+        line-height:30px;
+        border-radius: 0px 0px 5px 5px;*/
+    text-align: center;
+}
+
+#sabitMenu div.fiyatlar {
+width: 613px;
+/*text-align: center;*/
+box-shadow: 0px 0px 8px #6d6d6d;
+height: 30px;
+display: inline-block;
+line-height: 30px;
+border-radius: 0px 0px 5px 5px;
+}
+
+#sabitMenu div.fiyatlar div.sabitDolar {
+padding-left: 5px;
+border: 0 solid #c5c5c5;
+border-left-width: 1px;
+}
+
+#sabitMenu div.fiyatlar:nth-child(1) {
+border: none !important;
+}
+
+#sabitMenu div.fiyatlar div {
+display: inline-block;
+}
+
+
+.sabitDolar:first-child {
+    border-left: none !important;
+}
+
+.sabitDolar:nth-child(1) > font > a {
+    color: brown
+}
+
+.sabitDolar:nth-child(2) > font > a {
+    color: #5a91bf
+}
+
+.sabitDolar:nth-child(3) > font > a {
+    color: #00c292
+}
+
+.sabitDolar:nth-child(4) > font > a {
+    color: #b1a230
+}
