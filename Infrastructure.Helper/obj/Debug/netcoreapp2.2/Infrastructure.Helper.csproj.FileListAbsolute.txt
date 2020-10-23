@@ -1,0 +1,8 @@
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Helper\bin\Debug\netcoreapp2.2\Infrastructure.Helper.deps.json
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Helper\bin\Debug\netcoreapp2.2\Infrastructure.Helper.dll
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Helper\bin\Debug\netcoreapp2.2\Infrastructure.Helper.pdb
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Helper\obj\Debug\netcoreapp2.2\Infrastructure.Helper.csproj.CoreCompileInputs.cache
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Helper\obj\Debug\netcoreapp2.2\Infrastructure.Helper.AssemblyInfoInputs.cache
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Helper\obj\Debug\netcoreapp2.2\Infrastructure.Helper.AssemblyInfo.cs
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Helper\obj\Debug\netcoreapp2.2\Infrastructure.Helper.dll
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Helper\obj\Debug\netcoreapp2.2\Infrastructure.Helper.pdb
