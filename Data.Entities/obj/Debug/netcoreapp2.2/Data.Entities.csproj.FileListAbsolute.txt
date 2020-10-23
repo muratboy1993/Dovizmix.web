@@ -1,0 +1,29 @@
+C:\tfs\DovizApp\Dev\DovizApp\Data.Entities\bin\Debug\netcoreapp2.2\Data.Entities.deps.json
+C:\tfs\DovizApp\Dev\DovizApp\Data.Entities\bin\Debug\netcoreapp2.2\Data.Entities.dll
+C:\tfs\DovizApp\Dev\DovizApp\Data.Entities\bin\Debug\netcoreapp2.2\Data.Entities.pdb
+C:\tfs\DovizApp\Dev\DovizApp\Data.Entities\obj\Debug\netcoreapp2.2\Data.Entities.csprojAssemblyReference.cache
+C:\tfs\DovizApp\Dev\DovizApp\Data.Entities\obj\Debug\netcoreapp2.2\Data.Entities.csproj.CoreCompileInputs.cache
+C:\tfs\DovizApp\Dev\DovizApp\Data.Entities\obj\Debug\netcoreapp2.2\Data.Entities.AssemblyInfoInputs.cache
+C:\tfs\DovizApp\Dev\DovizApp\Data.Entities\obj\Debug\netcoreapp2.2\Data.Entities.AssemblyInfo.cs
+C:\tfs\DovizApp\Dev\DovizApp\Data.Entities\obj\Debug\netcoreapp2.2\Data.Entities.dll
+C:\tfs\DovizApp\Dev\DovizApp\Data.Entities\obj\Debug\netcoreapp2.2\Data.Entities.pdb
+D:\VS\DovizApp\Data.Entities\bin\Debug\netcoreapp2.2\Data.Entities.deps.json
+D:\VS\DovizApp\Data.Entities\bin\Debug\netcoreapp2.2\Data.Entities.dll
+D:\VS\DovizApp\Data.Entities\bin\Debug\netcoreapp2.2\Data.Entities.pdb
+D:\VS\DovizApp\Data.Entities\obj\Debug\netcoreapp2.2\Data.Entities.csprojAssemblyReference.cache
+D:\VS\DovizApp\Data.Entities\obj\Debug\netcoreapp2.2\Data.Entities.AssemblyInfoInputs.cache
+D:\VS\DovizApp\Data.Entities\obj\Debug\netcoreapp2.2\Data.Entities.AssemblyInfo.cs
+D:\VS\DovizApp\Data.Entities\obj\Debug\netcoreapp2.2\Data.Entities.dll
+D:\VS\DovizApp\Data.Entities\obj\Debug\netcoreapp2.2\Data.Entities.pdb
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Data.Entities\bin\Debug\netcoreapp2.2\Data.Entities.deps.json
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Data.Entities\bin\Debug\netcoreapp2.2\Data.Entities.dll
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Data.Entities\bin\Debug\netcoreapp2.2\Data.Entities.pdb
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Data.Entities\obj\Debug\netcoreapp2.2\Data.Entities.csprojAssemblyReference.cache
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Data.Entities\obj\Debug\netcoreapp2.2\Data.Entities.AssemblyInfoInputs.cache
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Data.Entities\obj\Debug\netcoreapp2.2\Data.Entities.AssemblyInfo.cs
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Data.Entities\obj\Debug\netcoreapp2.2\Data.Entities.dll
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Data.Entities\obj\Debug\netcoreapp2.2\Data.Entities.pdb
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Data.Entities\bin\Debug\netcoreapp2.2\Data.Entities.runtimeconfig.json
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Data.Entities\bin\Debug\netcoreapp2.2\Data.Entities.runtimeconfig.dev.json
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Data.Entities\obj\Debug\netcoreapp2.2\Data.Entities.genruntimeconfig.cache
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Data.Entities\obj\Debug\netcoreapp2.2\Data.Entities.csproj.CoreCompileInputs.cache

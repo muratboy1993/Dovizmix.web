@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\exorc\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\exorc\\.nuget\\packages"
+    ]
+  }
+}
