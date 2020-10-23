@@ -1,0 +1,9 @@
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Caching\bin\Debug\netcoreapp2.2\Infrastructure.Caching.deps.json
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Caching\bin\Debug\netcoreapp2.2\Infrastructure.Caching.dll
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Caching\bin\Debug\netcoreapp2.2\Infrastructure.Caching.pdb
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Caching\obj\Debug\netcoreapp2.2\Infrastructure.Caching.csproj.CoreCompileInputs.cache
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Caching\obj\Debug\netcoreapp2.2\Infrastructure.Caching.AssemblyInfoInputs.cache
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Caching\obj\Debug\netcoreapp2.2\Infrastructure.Caching.AssemblyInfo.cs
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Caching\obj\Debug\netcoreapp2.2\Infrastructure.Caching.dll
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Caching\obj\Debug\netcoreapp2.2\Infrastructure.Caching.pdb
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Caching\obj\Debug\netcoreapp2.2\Infrastructure.Caching.csprojAssemblyReference.cache

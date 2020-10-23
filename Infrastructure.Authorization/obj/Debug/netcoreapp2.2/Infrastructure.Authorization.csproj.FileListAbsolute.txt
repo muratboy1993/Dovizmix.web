@@ -1,0 +1,28 @@
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Authorization\bin\Debug\netcoreapp2.2\Infrastructure.Authorization.deps.json
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Authorization\bin\Debug\netcoreapp2.2\Infrastructure.Authorization.dll
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Authorization\bin\Debug\netcoreapp2.2\Infrastructure.Authorization.pdb
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Authorization\obj\Debug\netcoreapp2.2\Infrastructure.Authorization.csproj.CoreCompileInputs.cache
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Authorization\obj\Debug\netcoreapp2.2\Infrastructure.Authorization.AssemblyInfoInputs.cache
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Authorization\obj\Debug\netcoreapp2.2\Infrastructure.Authorization.AssemblyInfo.cs
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Authorization\obj\Debug\netcoreapp2.2\Infrastructure.Authorization.dll
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Authorization\obj\Debug\netcoreapp2.2\Infrastructure.Authorization.pdb
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Authorization\obj\Debug\netcoreapp2.2\Infrastructure.Authorization.csprojAssemblyReference.cache
+D:\VS\DovizApp\Infrastructure.Authorization\bin\Debug\netcoreapp2.2\Infrastructure.Authorization.deps.json
+D:\VS\DovizApp\Infrastructure.Authorization\bin\Debug\netcoreapp2.2\Infrastructure.Authorization.dll
+D:\VS\DovizApp\Infrastructure.Authorization\bin\Debug\netcoreapp2.2\Infrastructure.Authorization.pdb
+D:\VS\DovizApp\Infrastructure.Authorization\obj\Debug\netcoreapp2.2\Infrastructure.Authorization.csprojAssemblyReference.cache
+D:\VS\DovizApp\Infrastructure.Authorization\obj\Debug\netcoreapp2.2\Infrastructure.Authorization.AssemblyInfoInputs.cache
+D:\VS\DovizApp\Infrastructure.Authorization\obj\Debug\netcoreapp2.2\Infrastructure.Authorization.AssemblyInfo.cs
+D:\VS\DovizApp\Infrastructure.Authorization\obj\Debug\netcoreapp2.2\Infrastructure.Authorization.dll
+D:\VS\DovizApp\Infrastructure.Authorization\obj\Debug\netcoreapp2.2\Infrastructure.Authorization.pdb
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Infrastructure.Authorization\bin\Debug\netcoreapp2.2\Infrastructure.Authorization.deps.json
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Infrastructure.Authorization\bin\Debug\netcoreapp2.2\Infrastructure.Authorization.dll
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Infrastructure.Authorization\bin\Debug\netcoreapp2.2\Infrastructure.Authorization.pdb
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Infrastructure.Authorization\obj\Debug\netcoreapp2.2\Infrastructure.Authorization.csprojAssemblyReference.cache
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Infrastructure.Authorization\obj\Debug\netcoreapp2.2\Infrastructure.Authorization.AssemblyInfoInputs.cache
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Infrastructure.Authorization\obj\Debug\netcoreapp2.2\Infrastructure.Authorization.AssemblyInfo.cs
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Infrastructure.Authorization\obj\Debug\netcoreapp2.2\Infrastructure.Authorization.dll
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Infrastructure.Authorization\obj\Debug\netcoreapp2.2\Infrastructure.Authorization.pdb
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Infrastructure.Authorization\bin\Debug\netcoreapp2.2\Infrastructure.Authorization.runtimeconfig.json
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Infrastructure.Authorization\bin\Debug\netcoreapp2.2\Infrastructure.Authorization.runtimeconfig.dev.json
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Infrastructure.Authorization\obj\Debug\netcoreapp2.2\Infrastructure.Authorization.genruntimeconfig.cache

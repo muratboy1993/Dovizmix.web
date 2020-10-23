@@ -1,0 +1,28 @@
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Email\bin\Debug\netcoreapp2.2\Infrastructure.Email.deps.json
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Email\bin\Debug\netcoreapp2.2\Infrastructure.Email.dll
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Email\bin\Debug\netcoreapp2.2\Infrastructure.Email.pdb
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Email\obj\Debug\netcoreapp2.2\Infrastructure.Email.csproj.CoreCompileInputs.cache
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Email\obj\Debug\netcoreapp2.2\Infrastructure.Email.AssemblyInfoInputs.cache
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Email\obj\Debug\netcoreapp2.2\Infrastructure.Email.AssemblyInfo.cs
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Email\obj\Debug\netcoreapp2.2\Infrastructure.Email.dll
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Email\obj\Debug\netcoreapp2.2\Infrastructure.Email.pdb
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Email\obj\Debug\netcoreapp2.2\Infrastructure.Email.csprojAssemblyReference.cache
+D:\VS\DovizApp\Infrastructure.Email\bin\Debug\netcoreapp2.2\Infrastructure.Email.deps.json
+D:\VS\DovizApp\Infrastructure.Email\bin\Debug\netcoreapp2.2\Infrastructure.Email.dll
+D:\VS\DovizApp\Infrastructure.Email\bin\Debug\netcoreapp2.2\Infrastructure.Email.pdb
+D:\VS\DovizApp\Infrastructure.Email\obj\Debug\netcoreapp2.2\Infrastructure.Email.csprojAssemblyReference.cache
+D:\VS\DovizApp\Infrastructure.Email\obj\Debug\netcoreapp2.2\Infrastructure.Email.AssemblyInfoInputs.cache
+D:\VS\DovizApp\Infrastructure.Email\obj\Debug\netcoreapp2.2\Infrastructure.Email.AssemblyInfo.cs
+D:\VS\DovizApp\Infrastructure.Email\obj\Debug\netcoreapp2.2\Infrastructure.Email.dll
+D:\VS\DovizApp\Infrastructure.Email\obj\Debug\netcoreapp2.2\Infrastructure.Email.pdb
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Infrastructure.Email\bin\Debug\netcoreapp2.2\Infrastructure.Email.deps.json
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Infrastructure.Email\bin\Debug\netcoreapp2.2\Infrastructure.Email.dll
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Infrastructure.Email\bin\Debug\netcoreapp2.2\Infrastructure.Email.pdb
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Infrastructure.Email\obj\Debug\netcoreapp2.2\Infrastructure.Email.csprojAssemblyReference.cache
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Infrastructure.Email\obj\Debug\netcoreapp2.2\Infrastructure.Email.AssemblyInfoInputs.cache
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Infrastructure.Email\obj\Debug\netcoreapp2.2\Infrastructure.Email.AssemblyInfo.cs
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Infrastructure.Email\obj\Debug\netcoreapp2.2\Infrastructure.Email.dll
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Infrastructure.Email\obj\Debug\netcoreapp2.2\Infrastructure.Email.pdb
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Infrastructure.Email\bin\Debug\netcoreapp2.2\Infrastructure.Email.runtimeconfig.json
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Infrastructure.Email\bin\Debug\netcoreapp2.2\Infrastructure.Email.runtimeconfig.dev.json
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Infrastructure.Email\obj\Debug\netcoreapp2.2\Infrastructure.Email.genruntimeconfig.cache
