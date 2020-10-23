@@ -1,0 +1,346 @@
+﻿@model Common.Model.Comment.Response.ResComments
+@{
+    ViewData["Title"] = "Home Page";
+    ViewData["Keywords"] = ViewBag.Keywords + ",dolar, euro, dovizmix, parite, yükseliş, düşüş";
+}
+
+<link href="~/css/comments.css" rel="stylesheet" />
+
+<!-- Grafik -->
+<!-- Date Based Data -->
+@*<div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Date Based Data</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="chart">
+                <div id="lion_amcharts_6" style="height: 300px;"></div>
+            </div>
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->*@
+
+@*Anket Modal*@
+
+<div class="modal fade" id="anketModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Anket Oluştur</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="frmAddPoll">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="PollMessage" name="Message" placeholder="Anket sorusunu yazınız." />
+                    </div>
+                    <div id="addOptions">
+                        <div class="form-group">
+                            <div class="input-group input-group-sm">
+                                <input type="text" class="form-control vote" id="Options" name="Options" placeholder="Seçenek">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group input-group-sm">
+                                <input type="text" class="form-control vote" id="Options" name="Options" placeholder="Seçenek">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" id="btnOptionAdd" class="btn btn-link glyphicon-plus">Seçenek Ekle</button>
+                        <div class="form-row align-items-center">
+                            <div class="col-auto my-1">
+                                <span>Anket Süresi (Gün)</span>
+                                <select class="custom-select mr-sm-2" id="Days" name="Days">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    @Html.AntiForgeryToken()
+                </div>
+                <div class="modal-footer">
+                    <input type="file" name="Graphic" id="PollGraphicPath" style="display:none" accept="image/*" onchange="PollUploadGraphics()">
+                    <label class="pointer" for="PollGraphicPath" id="lblGrafikEkle"><i class="fa fa-plus-square"></i> Grafik Ekle</label>
+
+                    <button type="button" id="btnPoolAdd" class="btn btn-primary">Anket Oluştur</button>
+                </div>
+                <input type="hidden" name="MarketId" value="@ViewBag.marketId" />
+            </form>
+            <div id="poll_result"></div>
+        </div>
+    </div>
+</div>
+
+@{
+    if (User.Identity.IsAuthenticated)
+    {
+        //todo: Kulklanıcı register değilse gizlenecek
+        if (ViewBag.IsEmailConfirmed)
+        {
+            <div class="box">
+                <div class="box-header with-border">
+                    <h4 class="box-title">Yorum Yaz</h4>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" title="Gizle/Göster" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+
+                    <div class="alert bg-danger" style="font-size:10px!important">@Html.Raw(ViewBag.AddCommentWarning) <button type="button" class="btn btn-success btn-xs pull-right" style="margin-top: -5px;" data-toggle="modal" data-target="#modal-right"> Kurallar </button></div>
+                    <form role="form" action="/Comment/AddComment" method="post" id="FrmAddComment" enctype="multipart/form-data">
+                        <input type="hidden" id="MarketId" name="MarketId" value="@ViewBag.marketId" />
+                        <input type="hidden" id="LastViewedCommentId" name="LastViewedCommentId" value="@ViewBag.LastViewCommentId" />
+                        <input type="hidden" id="QueryType" name="QueryType" value="" />
+                        <input type="hidden" id="PageCount" name="PageCount" value="" />
+                        @{
+                            var starCount = ViewBag.StarCount;
+
+                            if (starCount >= 1)
+                            {
+                                <input type="file" id="GraphicPath" name="GraphicPath" accept="image/*" style="display:none" title="Grafik Seç..." onchange="UploadGraphics()" />
+                                <label class="pointer" for="GraphicPath" id="lblGraphicEkle"><i class="fa fa-plus-square"></i> Grafik Ekle</label>
+                            }
+
+                            if (starCount >= 3)
+                            {
+                                <button type="button" class="btn btn-primary  pull-right" data-toggle="modal" data-target="#anketModal">Anket Ekle</button>
+                            }
+                        }
+                        <div class="form-group">
+                            <textarea class="form-control" name="Message" rows="3" id="textMainComment" placeholder="Yorumunuzu buraya yazınız..." onkeyup="MessageControl(this), TextareaSearch(this)" onkeydown="MessageControl(this)"></textarea>
+                            <div> <label>Kalan : </label><label class="lblCommentCharacterCount"> 5000</label></div>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success" id="btnCommentSend">Gönder </button>
+                        </div>
+                        @Html.AntiForgeryToken()
+                    </form>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            if (ViewBag.IsBanned)
+            {
+                <div class="alert alert-danger"> Kural ihlali sebebiyle @ViewBag.BanEndTime tarihine kadar üyeliğiniz yoruma kapanmıştır. Detaylar için bildirimlerinizi inceleyiniz. </div>
+            }
+
+        }
+        else
+        {
+
+            <div class="alert alert-danger"> Yorum yazabilmek için, üyeliğiniz aktif etmeniz gerekmektedir. </div>
+        }
+    }
+    else
+    {
+        <input type="hidden" id="MarketId" name="MarketId" value="@ViewBag.marketId" />
+        <input type="hidden" id="LastViewedCommentId" name="LastViewedCommentId" value="@ViewBag.LastViewCommentId" />
+        <div class="alert alert-danger"> Yorum yazabilmek için üye girişi yapmanız gerekmektedir. </div>
+    }
+}
+@{
+    if (Model.ResGetComments.Count > 0)
+    {
+        <div class="box">
+            <div class="box-header with-border comment-header">
+                <div class="ribbon-wrapper" style="padding: 32px 5px 0px 10px">
+                    <div class="ribbon ribbon-bookmark bg-danger">Yasal Uyarı:</div>
+                    <p class="ribbon-content" style="font-size:10px!important">@Html.Raw(ViewBag.LegalWarning) </p>
+                </div>
+
+                <div class="pull-left">
+                    <h6 class="box-title">Yorumlar (<span>@Model.TotalCount</span>)</h6>
+                </div>
+
+
+                <div class="query-radio-button pull-right">
+                    <input name="QueryType" value="Tumu" type="radio" id="rdAll" checked>
+                    <label for="rdAll">Tümü</label>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <input name="QueryType" type="radio" id="rdSubscribe" value="TakipEdilen">
+                        <label for="rdSubscribe">Takip Ettiklerim</label>
+                    }
+
+                    <input name="QueryType" value="Grafik" type="radio" class="with-gap" id="rdGraphics">
+                    <label for="rdGraphics">Grafikler</label>
+                    <input name="QueryType" value="Anket" type="radio" id="rdPoll" class="with-gap">
+                    <label for="rdPoll">Anketler</label>
+                    <input name="QueryType" value="Yildizli" type="radio" id="rdStarreds" class="with-gap">
+                    <label for="rdStarreds">Yıldızlı Üyelerin Yorumları</label>
+                </div>
+            </div>
+
+            @await Html.PartialAsync("_Comment", Model.ResGetComments)
+            @{
+
+                string market = ViewContext.ModelState["seourl"].AttemptedValue;
+
+                int currentPage = 1;
+
+                if (ViewContext.ModelState["page"] != null)
+                {
+                    currentPage = Convert.ToInt32(ViewContext.ModelState["page"].AttemptedValue);
+                }
+
+                int pageSize = Model.PageSize;
+
+                int totalCount = Model.TotalCount;
+
+                decimal pageCount;
+
+                if (totalCount % pageSize == 0)
+                {
+                    pageCount = totalCount / pageSize;
+                }
+                else
+                {
+                    pageCount = (int)(totalCount / pageSize) + 1;
+                }
+
+                var startPage = currentPage - 3;
+                var endPage = currentPage + 3;
+                if (startPage <= 0)
+                {
+                    endPage -= (startPage - 1);
+                    startPage = 1;
+                }
+                if (endPage > pageCount)
+                {
+                    endPage = (int)pageCount;
+                    if (endPage > 10)
+                    {
+                        startPage = endPage - 6;
+                    }
+                }
+                <div class="container">
+                    <nav class="mt-15 pb-10">
+                        @if (endPage > 1)
+                        {
+                            <ul class="pagination justify-content-center">
+                                @if (currentPage > 1)
+                                {
+                                    <li class="page-item">
+                                        <a class="page-link" href="~/doviz/@Model.QueryType/@Model.SeoUrl/1">İlk</a>
+                                    </li>
+                                }
+                                @for (var page = startPage; page <= endPage; page++)
+                                {
+                                    <li class="page-item @(page == currentPage ? "active disabled" : "")">
+                                        <a class="page-link" href="~/doviz/@Model.QueryType/@Model.SeoUrl/@(page)">@(page)</a>
+                                    </li>
+                                }
+                                @if (currentPage < pageCount)
+                                {
+                                    <li class="page-item">
+                                        <a class="page-link" href="~/doviz/@Model.QueryType/@Model.SeoUrl/@(pageCount)">Son</a>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            @if (totalCount <= pageSize)
+                            {
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item active disabled">
+                                        <a class="page-link" href="~/doviz/@Model.QueryType/@Model.SeoUrl/1">1</a>
+                                    </li>
+                                </ul>
+                            }
+                        }
+                    </nav>
+                </div>
+            }
+        </div>
+        <div id="ComplaintView" style="display:none;z-index: 999;">
+            <div id="mdl">
+
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="box">
+            <div class="box-header with-border comment-header">
+                <div class="ribbon-wrapper" style="padding: 35px 0px 5px 25px;">
+                    <div class="ribbon ribbon-bookmark bg-danger">Yasal Uyarı:</div>
+                    <p class="ribbon-content" style="font-size:10px!important">@Html.Raw(ViewBag.LegalWarning) <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-right"> !Kurallar </button></p>
+                </div>
+                <br /><br />
+                <h5 class="box-title">Yorumlar (<span>0</span>)</h5>
+                <div class="query-radio-button">
+                    <input name="QueryType" value="Tumu" type="radio" id="rdAll" checked>
+                    <label for="rdAll">Tümü</label>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <input name="QueryType" type="radio" id="rdSubscribe" value="TakipEdilen">
+                        <label for="rdSubscribe">Takip Ettiklerim</label>
+                    }
+
+                    <input name="QueryType" value="Grafik" type="radio" class="with-gap" id="rdGraphics">
+                    <label for="rdGraphics">Grafikler</label>
+                    <input name="QueryType" value="Anket" type="radio" id="rdPoll" class="with-gap">
+                    <label for="rdPoll">Anketler</label>
+                    <input name="QueryType" value="Yildizli" type="radio" id="rdStarreds" class="with-gap">
+                    <label for="rdStarreds">Yıldızlı Üyelerin Yorumları</label>
+                </div>
+            </div>
+            <div class="box-body p-0 no-comment-msg" style="border-bottom: 1px solid #dadada;padding: 15px!important; ">
+                @if (Model.QueryType == "Subscribed")
+                {
+                    <h5>Henüz kimseyi takip etmiyorsunuz !</h5>
+                }
+                else
+                {
+                    <h5>İlk yorumu siz yazın</h5>
+                }
+            </div>
+        </div>
+    }
+}
+
+@* Site Kuralları *@
+<!-- Modal -->
+<div class="modal modal-right fade" id="modal-right" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Kurallar</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    @Html.Raw(ViewBag.Rules)
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.modal -->
+<!-- Popup CSS -->
+<link href="/assets/vendor_components/Magnific-Popup-master/dist/magnific-popup.css" rel="stylesheet">
+
+<!-- Magnific popup JavaScript -->
+<script src="/assets/vendor_components/Magnific-Popup-master/dist/jquery.magnific-popup.min.js"></script>
+<script src="/assets/vendor_components/Magnific-Popup-master/dist/jquery.magnific-popup-init.js"></script>
+
+<script src="~/js/comments.js"></script>

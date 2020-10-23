@@ -1,0 +1,42 @@
+﻿<div class="myadmin-alert myadmin-alert-icon myadmin-alert-click alert-danger myadmin-alert-bottom alertbottom" style="display: none;" id="addBlockComment">&nbsp;&nbsp;&nbsp;Merhaba Değerli kullanıcımız Dovizmix'in tek gelir kaynağı reklam yayınlarıdır. Reklam yayınını devredışı bırakan uygulamalar kullanan tarayıcılarda site kaynaklarının tüketimi artmasına nazaran Dovizmix'e hiç bir katkısı bulunmaması sebebiyle reklamlar devredışı kaldığında Dovizmix sizin için güncellemeleri daha yavaş (3 sn yerine 30 sn sayısal veri&grafik, 15 yerine 60 saniyede yorumları) gönderecektir. Eğer Dovizmix'e destek olmak ve daha hızlı kullanmak isterseniz reklamları devredışı bıraktığınız uygulamadan Dovizmix için reklamları aktifleştirebilirsiniz. Anlayışınız ve desteğiniz için içtenlikle teşekkür ederiz.<a href="#" class="closed">×</a> </div>
+
+
+<script>
+    $(".myadmin-alert .closed").click(function (event) {
+        $(this).parents(".myadmin-alert").fadeToggle(350);
+        return false;
+    });
+    // Function called if AdBlock is not detected
+    function adBlockNotDetected() {
+        $("#addBlockComment").hide();
+    }
+    // Function called if AdBlock is detected
+    function adBlockDetected() {
+        $("#addBlockComment").show();
+    }
+
+    // We look at whether Addblock already exists.
+    if (typeof addblock !== 'undefined' || typeof Addblock !== 'undefined') {
+        // If this is the case, it means that something tries to usurp are identity
+        // So, considering that it is a detection
+        adBlockDetected();
+    } else {
+        // Otherwise, you import the script Addblock
+        var dovizmix = document.createElement('script');
+        dovizmix.onload = function () {
+            // If all goes well, we configure Addblock
+            addblock.onDetected(adBlockDetected)
+            addblock.onNotDetected(adBlockNotDetected);
+        };
+        dovizmix.onerror = function () {
+            // If the script does not load (integrity problem, ...)
+            // Then a detection is triggered
+            adBlockDetected();
+        };
+        //dovizmix.integrity = 'sha256-4/8cdZfUJoNm8DLRzuKwvhusQbdUqVov+6bVj9ewL7U=';
+        //dovizmix.crossOrigin = 'anonymous';
+        dovizmix.src = '/js/adBlocker.js';
+        document.head.appendChild(dovizmix);
+    }
+</script>
+

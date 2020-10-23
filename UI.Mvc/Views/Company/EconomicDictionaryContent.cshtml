@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewData["Title"] = "Ekonomik Sözlük - "+ViewBag.Title;
+    ViewData["Description"] = ViewBag.Description;
+    ViewData["Keywords"] = ViewBag.Keywords + ",ekonomik, sözlük, dovizmix, ülkeler, rehber, destek, araçlar, bilgi";
+}
+
+<link rel="stylesheet" type="text/css" href="~/css/tools.css" />
+
+<div class="container">
+    <ul class="breadcrumb">
+        <li><a href="/">Anasayfa</a></li>
+        <li><a href="/Araclar/ekonomik-sozluk">Sözlük</a></li>
+        <li class="active">@ViewBag.Content.Name</li>
+    </ul>
+    <div class="row">
+        <div class="col-md-2">
+            <h1>@ViewBag.Content.Category</h1>
+            @foreach (var item2 in ViewBag.Dictionary)
+            {
+                if (item2.Category == ViewBag.Content.Category)
+                {
+                    <a href="/Araclar/ekonomik-sozluk/@item2.Seourl">@item2.Name</a>
+                    <br />
+                }
+            }
+        </div>
+        <div class="col-md-10">
+            <h3>@ViewBag.Content.Name</h3>
+            <p>
+                @ViewBag.Content.Content
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/js/tools.js"></script>
+<script src="~/assets/vendor_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="~/assets/vendor_components/jquery/dist/jquery.min.js"></script>

@@ -1,0 +1,45 @@
+﻿@* Şikayet etme modal *@
+<div class="modal center-modal fade" id="AddComplaintDiv" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Şikayet Et</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" name="AddComplaint" id="AddComplaint" method="post">
+                    <div class="form-group">
+                        <label>Sebep :</label>
+                        <select id="TopicId" class="form-control select2 w-p100">
+                            @foreach (var item in ViewBag.Topic)
+                            {
+                                <option value="@item.Id">@item.Topic</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Açıklama :</label>
+                        <input type="hidden" id="ComplaintCommentId" name="ComplaintCommentId" value="">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="ion ion-quote"></i>
+                            </div>
+                            <textarea class="form-control" name="description" rows="3" id="description" placeholder="Açıklamınızı buraya yazınız..." onkeyup="MessageControl(this)" onkeydown="MessageControl(this)"></textarea>
+                        </div>
+                        <br />
+                        <label>Kalan : </label><label class="lblCommentCharacterCount"> 5000</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <button type="submit" class="btn btn-primary btn-block mb-15" id="btnSend">Gönder</button>
+                            <div id="AddComplaintResult"></div>
+                        </div>
+                    </div>
+                    @Html.AntiForgeryToken()
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

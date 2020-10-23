@@ -1,0 +1,54 @@
+﻿@{
+    <!-- Notifications -->
+    <li class="dropdown notifications-menu">
+        <a href="#" id="notificationMenu" data-target="#modal-rightnotfication" data-toggle="modal" class="dropdown-toggle">
+            <i class="fa fa-bullhorn"></i><span id="notificationCount" class="badge badge-pill"></span>
+        </a>
+    </li>
+
+    <li class="dropdown user user-menu">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <img src="/assets/images/avatar/@ViewBag.AvatarPath" class="user-image rounded-circle" alt="@ViewBag.NameSurname">
+        </a>
+        <ul class="dropdown-menu scale-up">
+            <li><p style="width:170px"></p></li>
+            <!-- User image -->
+            <li>
+                <p style="text-align: center; color: white; font-weight: 500;">
+                    <span class="mb-5">@User.Claims.FirstOrDefault(c => c.Type == "UserName").Value</span>
+                    <br/>
+                    <span class="mb-5">@ViewBag.Email</span>
+                </p>
+            </li>
+            <!-- Menu Body -->
+            <li class="user-body">
+                <div class="row no-gutters">
+                    <div class="col-12 text-left">
+                        <a href="/profil/@User.Claims.FirstOrDefault(c => c.Type == "UserName").Value"><i class="ion ion-person"></i> Profilim</a>
+                    </div>
+                    <div class="col-12 text-left">
+                        <a href="/Yatirimlar"><i class="ion ion-arrow-graph-up-right font-size-20 text-white"></i>Yatırımlarım</a>
+                    </div>
+                    <div class="col-12 text-left">
+                        <a href="/profil/Ayarlar"><i class="ti-settings"></i> Hesap Ayarları</a>
+                    </div>
+                    <div role="separator" class="divider col-12"></div>
+                    <div class="col-12 text-left">
+                        <a href="/Hesap/Cikis"><i class="fa fa-power-off"></i> Çıkış</a>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </li>
+        </ul>
+    </li>
+}
+<script>
+    $("#notificationMenu").click(function () {
+
+        CommentNotificationPromise();
+
+        //GetCommentNotification();
+        //NotificationUpdateIsShown();
+        //GetNotificationCount();
+    });
+</script>

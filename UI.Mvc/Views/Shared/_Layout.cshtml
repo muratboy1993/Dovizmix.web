@@ -1,0 +1,191 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="Copyright" content="Bu sitede yer alan bilgileri, Murat BOY ve/veya veri sağlayıcıdan yazılı izin almadan kullanmak, saklamak, kopyasını üretmek, görüntülemek, düzenlemek veya dağıtmak yasaktır. Fikri mülkiyet hakkı, sitede yer alan verileri sağlayanlara ve/veya borsalara aittir. Serkan Reis reklamlarla veya reklam verenlerle etkileşiminize bağlı olarak internet sitesinde görüntülenen reklamlardan gelir elde edebilir." />
+    <meta name="Author" content="dovizmix">
+    <meta http-equiv="content-language" content="tr" />
+    @*<meta http-equiv="Refresh" content="60" />*@
+    <meta name="robots" content="all" />
+    <meta name="Distribution" Content="Global" />
+    <meta name="Copyright" Content="2019" />
+    <meta name="google" value="notranslate" />
+    <meta name="geography" content="Türkiye">
+    <meta name="geo.placename" content="Türkiye" />
+    <meta name="revisit-after" content="1 days" />
+
+
+    <meta name="Abstract" content="Döviz,borsa,kur,euro,dolar,tl,parite" />
+    <title>@ViewData["Title"] | Dövizmix</title>
+    <meta name="Description" content="@Html.Raw(ViewData["Description"])">
+    <meta name="Keywords" content="@Html.Raw(ViewData["Keywords"])" />
+
+    @*<link rel="icon" href="/assets/images/favicon.ico">*@
+
+    <!-- Bootstrap 4.0-->
+    <link rel="stylesheet" href="/assets/vendor_components/bootstrap/dist/css/bootstrap.css">
+
+
+    <link rel="stylesheet" href="~/css/cookie.css">
+
+
+
+    <!-- theme style -->
+    <link rel="stylesheet" href="/assets/css/site/master_style.css">
+
+    <!-- Bootstrap-extend -->
+    <link rel="stylesheet" href="/assets/css/site/bootstrap-extend.css">
+
+    <!-- Unique_Admin skins -->
+    <link rel="stylesheet" href="/assets/css/skins/_all-skins.css">
+
+    <!-- Layout Css -->
+    <link rel="stylesheet" href="~/css/layout.css" />
+    <link href="~/assets/Flags/flag.css" rel=stylesheet type="text/css">
+    <!-- jQuery 3 -->
+    <script src="/assets/vendor_components/jquery/dist/jquery.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+</head>
+<body class="sidebar-mini skin-yellow sidebar-collapse layout-boxed">
+    <div class="icon-bar">
+        <a href="modal #modal-center" data-toggle="modal" data-target="#modal-center" target="_blank" class="feedback"><i class="fa fa-send-o"></i></a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=google.com" target="_blank" class="facebook"><i class="fa fa-facebook"></i></a>
+        <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+    </div>
+    @*Addblocker*@
+
+    @await Html.PartialAsync("_AdBlocker")
+
+
+    @*Addblocker*@
+    <!-- Feedback Modal -->
+    <div class="modal center-modal fade" id="modal-center" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Sitemiz hakkındaki düşüncelerinizi bize bildirin..</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/Common/SetFeedback" name="frmFeedback" id="frmFeedback" method="post">
+                        <div class="form-group has-feedback">
+                            <input type="text" name="Email" id="Email" class="form-control" placeholder="Emailinizi giriniz..">
+                            <span class="fa fa-envelope form-control-feedback"></span>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <textarea rows="4" cols="50" style="resize:none" name="Message" id="Message" class="form-control" placeholder="Mesajınızı giriniz.."></textarea>
+                            <span class="ion ion-quote form-control-feedback"></span>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <button type="submit" class="btn btn-primary btn-block mb-15">Gönder</button>
+                                <div id="feedback_result"></div>
+                            </div>
+                        </div>
+                        @Html.AntiForgeryToken()
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.modal -->
+    <div class="wrapper">
+        <header class="main-header">
+
+            @await Html.PartialAsync("_NavbarTop")
+
+            <!-- Header Navbar -->
+
+        </header>
+        <div class="row topmarket">
+            @await Html.PartialAsync("_TopMarketInfo")
+        </div>
+
+        @await Html.PartialAsync("_NavbarBot")
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Main content -->
+            <section class="content">
+
+                <div class="row">
+                    <div class="col-md-8">
+                        @RenderBody()
+                    </div>
+
+                    <div class="col-md-4">
+                        @await Html.PartialAsync("_CryptoCoinTicker")
+                        @await Html.PartialAsync("_RegisterAndLoginAndPasswordRemember")
+                        <div id="EconomicCalendar"></div>
+                        <div id="MostLikedUsers"></div>
+                        @*@await Html.PartialAsync("_RightAdvertisementBox")*@
+
+                        @await Component.InvokeAsync("CurrencyConverter") 
+                        @*Html.PartialAsync("_CurrencyConverter")*@
+
+                        <div id="openMarkets"></div>
+                    </div>
+                </div>
+
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+
+        @await Html.PartialAsync("_MobileRightSidebar")
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            @await Html.PartialAsync("_RightNotificationBar")
+        }
+
+        @*Footer*@
+
+        @await Html.PartialAsync("_Footer")
+
+        @*Footer*@
+    </div>
+    <!-- ./wrapper -->
+    <!-- popper -->
+    <script src="/assets/vendor_components/popper/dist/popper.min.js"></script>
+
+    <!-- Bootstrap 4.0-->
+    <script src="/assets/vendor_components/bootstrap/dist/js/bootstrap.js"></script>
+
+    <!-- Slimscroll -->
+    <script src="/assets/vendor_components/jquery-slimscroll/jquery.slimscroll.js"></script>
+
+    <!-- FastClick -->
+    <script src="/assets/vendor_components/fastclick/lib/fastclick.js"></script>
+
+    <!-- Unique_Admin App -->
+    <script src="/assets/js/site/template.js"></script>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <link href="/assets/vendor_components/jquery-toast-plugin-master/src/jquery.toast.css" rel="stylesheet" />
+        <script src="/assets/vendor_components/jquery-toast-plugin-master/src/jquery.toast.js"></script>
+        <script src="~/js/notifications.js"></script>
+    }
+
+    <!-- Layout JS -->
+    <script src="~/js/layout.js"></script>
+
+
+
+
+    @RenderSection("scripts", false)
+    <script src="~/js/widgets.js"></script>
+    <script src="~/js/cookie.js"></script>
+    <!-- Scroll up-->
+    <script src="~/js/scrollUp.js"></script>
+</body>
+
+</html>

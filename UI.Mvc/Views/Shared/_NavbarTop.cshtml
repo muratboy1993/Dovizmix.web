@@ -1,0 +1,37 @@
+﻿<nav class="navbar navbar-expand-lg justify-content-between navbar-static-top bg-dark">
+    <a class="navbar-brand" href="@Url.Action("Index", "Home")">
+        <img src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+        dövizmix.com
+    </a>
+
+
+    <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav ">
+
+            <li class="search-box">
+                <a class="nav-link hidden-sm-down" href="javascript:void(0)"><i class="fa fa-search"></i></a>
+
+                <form class="app-search" style="display: none;">
+                    <div class="ui-widget">
+                        <input type="text" class="form-control" autocomplete="off" placeholder="Kullanıcı Ara" id="txtusername"> <a class="srh-btn"><i class="fa fa-times"></i></a>
+
+                    </div>
+
+                </form>
+
+            </li>
+
+            <!-- User Account -->
+
+            @await Html.PartialAsync("_User")
+
+            <!-- Control Sidebar Toggle Button -->
+
+            <li class="hidden-md-up">
+                <a href="#" data-toggle="modal" data-target="#modal-mobil"><i class="fa fa-bars"></i></a>
+                @*<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-mobil"><i class="fa fa-bars"></i></button>*@
+            </li>
+
+        </ul>
+    </div>
+</nav>

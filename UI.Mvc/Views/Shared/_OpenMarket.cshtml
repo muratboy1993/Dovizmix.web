@@ -1,0 +1,64 @@
+﻿@{ 
+    Layout = null;
+}
+@model List<Common.Model.OpenCloseMarkets.Response.ResOpenCloseMarkets>
+<div class="box widget-markets">
+    <div class="box-header with-border">
+        <h5 class="box-title">Açık Piyasalar</h5>
+        <a onclick="hide()" class="pull-right" href="#"><i class="fa fa-plus"></i>Tümünü Göster</a>
+    </div>
+    <div class="box-body p-0" id="hebele">
+        <div class="slimScrollAdd" style="height:350px;">
+            @{
+                    if (Model.Count != 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            if (item.OpenDateTime < DateTime.Now && item.CloseDateTime > DateTime.Now)
+                            {
+                            <div class="media-list media-list-hover media-list-divided  market-open">
+                                <a class="media media-single" href="#">
+                                    <span class="title">
+                                        <span class="badge badge-pill badge-success">&nbsp;&nbsp;</span> @item.Country
+                                    </span>
+                                    <span>Kapanış:   @item.CloseDateTime.ToString("dd MMMM hh:mm")</span>
+
+                                </a>
+
+
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="media-list media-list-hover media-list-divided  market-close">
+                                <a class="media media-single" href="#">
+                                    <span class="title">
+                                        <span class="badge badge-pill badge-danger">&nbsp;&nbsp;</span> @item.Country
+                                    </span>
+                                    <span>Açılış: @item.OpenDateTime.ToString("dd MMMM hh:mm")</span>
+                                </a>
+                            </div>
+                        }
+                    }
+                }
+                else
+                {
+                    <div style="text-align:center;">
+                        @*<i class="fa fa-window-close fa-3x"></i>*@
+                        <div class="media-body">
+                            <p>Sanırız tüm ülkeler tatile çıktı :)</p>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        if (!$(".market-open")[0]) {
+            $("#hebele").height(25);
+        }
+    });
+</script>

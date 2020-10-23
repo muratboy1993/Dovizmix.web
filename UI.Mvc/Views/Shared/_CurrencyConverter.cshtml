@@ -1,0 +1,167 @@
+﻿
+<div class="converter-form">
+    <form>
+        <div class="form-header">
+            <h2>Para Çevirici</h2>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" required="required" placeholder="0.00" onkeypress="calculate()" onkeydown="calculate()" id="converterAmount" value="0.00" onchange="calculate()">
+        </div>
+        <div class="row">
+            <div class="col-5">
+                
+                <div class="form-group">
+
+                    <select id="converterFrom" class="form-control select2" onChange="calculate()">
+                        <option value="USD" class="ceFlags USA" style="background-image:url(/assets/Flags/ce_flags_v25.png);"  data-image="/assets/Flags/ce_flags_v25.png"> USD </option>
+                        <option value="EUR">EUR </option>
+                        <option value="GBP">GBP </option>
+                        <option value="AUD">AUD </option>
+                        <option value="JPY">JPY </option>
+                        <option value="ALL">ALL</option>
+                        <option value="DZD">DZD</option>
+                        <option value="ARS"> ARS</option>
+                        <option value="ISK">ISK</option>
+                        <option value="INR"> IND</option>
+                    </select>
+
+                </div>
+            </div>
+            <div class="col-2">
+
+                <button type="button" class="btn btn-default">
+                    <span class="fa fa-exchange fa-lg" style="color: white"></span>
+                </button>
+            </div>
+            <div class="col-5">
+                <div class="form-group">
+
+                    <select id="converterTo" class="form-control select2" onChange="calculate()">
+                        <option value="USD">USD </option>
+                        <option value="EUR">EUR </option>
+                        <option value="GBP">GBP </option>
+                        <option value="AUD">AUD </option>
+                        <option value="JPY">JPY </option>
+                        <option value="ALL">ALL</option>
+                        <option value="DZD">DZD</option>
+                        <option value="ARS"> ARS</option>
+                        <option value="ISK">ISK</option>
+                        <option value="INR"> IND</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <br>
+        <h4 id="finalamount" align="center"></h4>
+        <br>
+
+    </form>
+</div>
+
+<!-- Select2 -->
+<link rel="stylesheet" href="/assets/vendor_components/select2/dist/css/select2.min.css">
+
+<style>
+    .form-control {
+        min-height: 41px;
+        box-shadow: none;
+        border-color: #e1e1e1;
+    }
+
+        .form-control:focus {
+            border-color: #00cb82;
+        }
+
+    .form-control, .btn {
+        /*border-radius: 3px;*/
+    }
+
+    .form-header {
+        margin: -30px -30px 20px;
+        padding: 30px 30px 10px;
+        text-align: center;
+        background: #00cb82;
+        border-bottom: 1px solid #eee;
+        color: #fff;
+    }
+
+        .form-header h2 {
+            font-size: 34px;
+            font-weight: bold;
+            margin: 0 0 10px;
+            font-family: sans-serif;
+        }
+
+        .form-header p {
+            margin: 20px 0 15px;
+            font-size: 17px;
+            line-height: normal;
+            font-family: 'Courgette', sans-serif;
+        }
+
+    .converter-form {
+        padding: 30px 0;
+    }
+
+        .converter-form form {
+            color: #999;
+            border-radius: 3px;
+            margin-bottom: 15px;
+            background: #f0f0f0;
+            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+        }
+
+        .converter-form .form-group {
+            margin-bottom: 20px;
+        }
+
+        .converter-form label {
+            font-weight: normal;
+            font-size: 13px;
+        }
+
+        .converter-form input[type="checkbox"] {
+            margin-top: 2px;
+        }
+
+        .converter-form .btn {
+            font-size: 12px;
+            background: #00cb82;
+            border: none;
+            margin-top: 6px;
+            margin-left: -15px;
+            width: 60px;
+        }
+
+            .converter-form .btn:hover, .converter-form .btn:focus {
+                background: #00b073 !important;
+                outline: none;
+            }
+
+        .converter-form a {
+            color: #00cb82;
+        }
+
+            .converter-form a:hover {
+                text-decoration: underline;
+            }
+</style>
+<!-- Select2 -->
+<script src="/assets/vendor_components/select2/dist/js/select2.full.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        "use strict";
+        //$(".select2").select2();
+    });
+
+    function calculate() {
+
+        var converterAmount = $("#converterAmount").val();
+
+        if (converterAmount != "0.00") {
+            console.log(converterAmount);
+        }
+
+    }
+</script>

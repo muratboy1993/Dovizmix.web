@@ -1,0 +1,333 @@
+﻿@model Common.Model.BaseResponse
+@{
+    var userModel = (Common.Model.User.Response.ResProfileSetting)Model.data;
+}
+
+
+@{
+    ViewData["Title"] = "Hesap Ayarları";
+    ViewData["Description"] = "Profilinizi özelleştirebilirsiniz";
+    ViewData["Keywords"] = "Kişisel, profil, hakkında, cinsiyet, meslek, şehir, ayar, dovizmix";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/css/profilesettings.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<!-- Select2 -->
+<link rel="stylesheet" href="/assets/vendor_components/select2/dist/css/select2.min.css">
+
+@{
+    if (!ViewBag.IsEmailConfirmed)
+    {
+        <form action="/Profil/Activation" name="frmActivation" id="frmActivation" method="post">
+            <div class="form-group has-feedback">
+                <input type="text" name="activationCode" id="activationCode" class="form-control" placeholder="Aktivasyon kodunu giriniz">
+                <span class="ion ion-log-in form-control-feedback"></span><button type="button" id="btnPostActivationCode" class="btn btn-info btn-block mb-15">Tekrar Gönder</button>
+            </div>
+
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="btn-group">
+
+                        <button type="submit" class="btn btn-primary btn-block mb-15">Aktivasyon Tamamla</button>
+                    </div>
+                </div>
+            </div>
+            @Html.AntiForgeryToken()
+        </form>
+        <div id="activationResult" style="display:none"></div>
+    }
+}
+
+<div class="row">
+    <div class="col-xl-4 col-lg-5">
+
+        <!-- Profile Image -->
+        <div class="box">
+            <div class="box-body box-profile">
+                <div style="text-align:center">
+
+                    @for (int i = 0; i < userModel.Level; i++)
+                    {
+                        <i class="fa fa-star" style="color: #fcc525;"></i>
+                    }
+                </div>
+
+                <div style="position:relative">
+                    @if (userModel.AvatarPath != "empty.png")
+                    {
+                        <div id="removeAvatarDiv" title="Sil" style="position: absolute;cursor:pointer;
+    top: -15px;
+    right: 0px;"><button type="button" onclick="RemoveAvatar()" class="btn btn-box-tool" style="cursor:pointer" data-toggle="tooltip" title="Sil" data-original-title="Sil"><i class="fa fa-remove red-btn font-size-20" style="cursor:pointer;color: red;" title="Sil"></i></button></div>
+                    }
+                    else
+                    {
+                        <div id="removeAvatarDiv" title="Sil" style="position: absolute;cursor:pointer;
+    top: -15px;
+    right: 0px;display:none;"><button type="button" onclick="RemoveAvatar()" class="btn btn-box-tool" style="cursor:pointer" data-toggle="tooltip" title="Sil" data-original-title="Sil"><i class="fa fa-remove red-btn font-size-20" style="cursor:pointer;color: red;" title="Sil"></i></button></div>
+                    }
+
+
+
+
+                    <form id="frmAvatarUpload" action="/Profile/UploadAvatar" enctype="multipart/form-data" method="post">
+                        <img id="profileSettingsAvatarImg" onclick="$('#imgFile').click()" class="profile-user-img rounded img-fluid mx-auto d-block" src="~/assets/images/avatar/@userModel.AvatarPath" style="cursor:pointer" alt="@userModel.Username">
+                        <input type="file" name="imgFile" accept="image/*" id="imgFile" onchange="ChangeAvatar()" style="width:1px; height:1px; display:inline-block; overflow:hidden" />
+                        <div class="progress">
+                            <div class="bar"></div>
+                            <div class="percent">0%</div>
+                        </div>
+                        <div id="status"></div>
+                    </form>
+                </div>
+
+                <h6 class="text-muted text-center mt-0">@userModel.Username</h6>
+                <h6 class="text-muted text-center mt-0">@userModel.Email</h6>
+
+
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+
+        <form id="frmChangePassword">
+            <div class="box box-solid bg-black">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Şifre  Değiştir</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label class="col-form-label">Eski Şifre</label>
+
+                                <input class="form-control" autocomplete="off" type="password" value="" id="oldPassword" name="oldPassword">
+
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-form-label">Yeni Şifre</label>
+
+                                <input class="form-control" autocomplete="off" type="password" value="" id="newPassword" name="newPassword">
+
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label">Yeni Şifre (Tekrar)</label>
+
+                                <input class="form-control" autocomplete="off" type="password" value="" id="newPasswordReplay" name="newPasswordReplay">
+
+                            </div>
+
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-yellow">Şifre Değiştir</button>
+                            </div>
+                            <div id="changePasswordResult"></div>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </form>
+
+        <div class="box" style="height:275px;">
+            <div class="box-header with-border">
+                <h5 class="box-title">Engellenen Kullanıcılar</h5>
+            </div>
+            <div class="box-body p-0">
+                <div class="bannedUserList">
+                    <div class="media-list media-list-hover media-list-divided inner-user-div">
+                        @if (userModel.BlockedMembers.Count != 0)
+                        {
+                            @foreach (var block in userModel.BlockedMembers)
+                            {
+                                <div class="media media-single" style="border-bottom: 1px solid rgba(97, 106, 120, 0.07)!important;">
+                                    <div class="media-body">
+                                        <h6><b><a href="/profil/@block.Username">@block.Username</a></b></h6>
+                                    </div>
+
+                                    <div class="media-right">
+                                        <a class="btn btn-block btn-warning btn-sm" href="#" onclick="UnBlock(this,@block.UserId,'setting')">Engeli Kaldır</a>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div style="margin-top: 75px;text-align:center;">
+                                <i class="fa fa-ban fa-2x"></i>
+                                <div class="media-body">
+                                    <p>Henüz engellemiş olduğunuz kullanıcı bulunmuyor.</p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- /.col -->
+    <div class="col-xl-8 col-lg-7">
+        <form id="frmPersonalOpinion">
+            <div class="box box-solid bg-black">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Kişisel Yorum</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Kişisel görüş ve yorumlarınız</label>
+                                <div class="col-sm-10">
+                                    <textarea onkeyup="MessageControl(this)" onkeydown="MessageControl(this)" class="form-control" rows="5" id="PersonalOpinion" name="PersonalOpinion">@userModel.PersonalOpinion</textarea>
+                                    <div> <label>Kalan : </label><label class="lblCommentCharacterCount"> 5000</label></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label"></label>
+                                <div class="col-sm-10">
+                                    <button type="submit" class="btn btn-yellow">Kaydet</button>
+                                </div>
+                            </div>
+                            <div id="personalOpinionResult" style="display:none"></div>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </form>
+
+        <form id="frmPersonalInfo">
+            <div class="box box-solid bg-black">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Kişisel Bilgiler</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Ad</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" value="@userModel.Name" id="Name" name="Name">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Soyad</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" value="@userModel.Surname" id="Surname" name="Surname">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">E-posta</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="email" disabled value="@userModel.Email" id="Email" name="Email">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Cinsiyet</label>
+                                <div class="col-sm-10">
+                                    @Html.DropDownListFor(model => userModel.Gender, new SelectList(ViewBag.Cinsiyet), new { @class = "form-control select2" })
+
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Doğum Tarihi</label>
+                                <div class="col-sm-10">
+                                    @{
+                                        if (userModel.DateOfBirth.HasValue)
+                                        {
+                                            <input class="form-control" type="text" value="@userModel.DateOfBirth.Value" id="DateOfBirth" name="DateOfBirth">
+                                        }
+                                        else
+                                        {
+                                            <input class="form-control" type="text" value="" id="DateOfBirth" name="DateOfBirth">
+                                        }
+                                    }
+
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Meslek</label>
+                                <div class="col-sm-10">
+                                    @Html.DropDownListFor(model => userModel.Job, new SelectList(ViewBag.Meslekler), new { @class = "form-control select2" })
+
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Şehir</label>
+                                <div class="col-sm-10">
+                                    @Html.DropDownListFor(model => userModel.City, new SelectList(ViewBag.Sehirler), new { @class = " form-control select2" })
+
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Twitter</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" value="@userModel.TwitterProfile" id="TwitterProfile" name="TwitterProfile">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Instagram</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" value="@userModel.InstagramProfile" id="InstagramProfile" name="InstagramProfile">
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Facebook</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" value="@userModel.FacebookProfile" id="FacebookProfile" name="FacebookProfile">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label"></label>
+                                <div class="col-sm-10">
+                                    <button type="submit" class="btn btn-yellow">Kaydet</button>
+                                </div>
+                            </div>
+
+                            <div id="personalInformationResult" style="display:none"></div>
+
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+
+
+        </form>
+    </div>
+    <!-- /.col -->
+
+</div>
+
+<script src="~/js/malsupJQueryForm.js"></script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<!-- Select2 -->
+<script src="/assets/vendor_components/select2/dist/js/select2.full.js"></script>
+<script src="~/js/profilesettings.js"></script>
+<script src="~/js/userprofile.js"></script>
+<script src="~/js/comments.js"></script>

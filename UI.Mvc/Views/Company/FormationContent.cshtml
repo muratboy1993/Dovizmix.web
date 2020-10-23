@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewData["Title"] = "Ekonomik Grafik Formasyon - " + ViewBag.Title;
+    ViewData["Description"] = ViewBag.Description;
+    ViewData["Keywords"] = ViewBag.Keywords + ",ekonomik, takvim, dovizmix, formasyon, ülkeler, eğriler";
+}
+
+<link rel="stylesheet" type="text/css" href="~/css/tools.css" />
+
+
+<div class="container">
+    <ul class="breadcrumb">
+        <li><a href="/">Anasayfa</a></li>
+        <li><a href="/Araclar/formasyonlar">Formasyonlar</a></li>
+        <li class="active">@ViewBag.Formation.Name</li>
+    </ul>
+    <div class="row">
+        <div class="col-md-2">
+            <h1>@ViewBag.Formation.Category</h1>
+            @foreach (var item2 in ViewBag.List)
+            {
+                <a href="/Araclar/formasyonlar/@item2.Seourl">@item2.Name</a>
+                <br />
+            }
+        </div>
+        <div class="col-md-10">
+            <h3>@ViewBag.Formation.Name</h3>
+            <p>
+                @ViewBag.Formation.Content
+            </p>
+            <br />
+            <img src="~/assets/images/@ViewBag.Formation.Graphic" />
+        </div>
+    </div>
+</div>
+
+
+<script src="~/js/tools.js"></script>
+

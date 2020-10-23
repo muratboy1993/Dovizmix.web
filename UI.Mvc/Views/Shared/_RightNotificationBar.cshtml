@@ -1,0 +1,51 @@
+﻿<!-- Modal -->
+<div class="modal modal-right fade" id="modal-rightnotfication" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="pull-left">
+                    <h5 class="modal-title">Bildirimler</h5>
+                </div>
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-success" onclick="CommentNotificationRefresh()" title="Yenile"><i class="fa fa-refresh"></i></button>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-danger" id="btnAllNotificationsDelete" onclick="AllNotificationDeletePromise()" title="Tümünü Sil"><i class="fa fa-eraser"></i></button>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-success" data-dismiss="modal" title="Kapat"><i class="fa fa-close"></i></button>
+                    </div>
+                </div>
+                
+                @*<div class="pull-left">
+                    <h5 class="modal-title">Bildirimler</h5>
+                  </div>
+                  <div class="pull-right">
+                    <a href="#"><i class="fa fa-refresh"></i> Yenile</a> |
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>*@
+            </div>
+            <div class="slimScrollAdd">
+                <div class="modal-body">
+                    <div id="commentnotification">
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- /.modal -->
+<style>
+    #modal-rightnotfication .modal-content {
+        height: 100% !important;
+    }
+
+    .modal-dialog {
+        width: 600px !important;
+    }
+</style>

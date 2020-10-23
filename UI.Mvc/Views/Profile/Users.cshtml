@@ -1,0 +1,439 @@
+﻿@model Common.Model.BaseResponse
+@{
+    var userModel = (Common.Model.User.Response.ResProfile)Model.data;
+    var message = (string)Model.message;
+}
+
+@{
+    ViewData["Title"] = "Profilim | Dovizmix";
+    ViewData["Description"] = "Profilinizin detaylarının listeleleyebilirsiniz";
+    ViewData["Keywords"] = "Kişisel, profil, hakkında, cinsiyet, meslek, şehir, dovizmix";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@if (userModel != null)
+{
+    if (userModel.UserToTargetIsBlocked != true && userModel.TargetToUserIsBlocked != true)
+    {
+        @*Üye Bilgilerinin Olduğu Kısım*@
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <div class="box p-30 pt-50 text-center">
+                    <div class="box">
+                        <div class="box-body p-0">
+                            <div class="col-md-2 pull-right">
+                                <a class="btn btn-block btn-danger btn-sm" href="#" onclick="AddBlock(this,@ViewBag.UserId, 'profile')">Engelle</a>
+                                @if (userModel.IsSubscribed != true)
+                                {
+                                    <a class="btn btn-block btn-success btn-sm" href="#" onclick="AddScribe(this,@ViewBag.UserId,'profile')">Takip Et</a>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-block btn-danger btn-sm" href="#" onclick="UnScribe(this,@ViewBag.UserId,'profile')">Takibi Bırak</a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <a class="avatar avatar-xxl status-success mb-3" href="/profil/@userModel.Username">
+                            <img src="~/assets/images/avatar/@userModel.AvatarPath" alt="...">
+                        </a>
+                    </div>
+
+                    <h5 class="mt-5 "><a class="text-default hover-primary" href="#">@userModel.Username</a></h5>
+                    @if (userModel.Job != null)
+                    {
+                        <p><small class="font-size-12">@userModel.Job</small></p>
+                    }
+                    @* TODO: SlimScroll koyulacak. 5000 karakter sınır var girilebilir. *@
+                    <p class="text-light font-size-12 mb-50">@userModel.PersonalOpinion</p>
+                    <div class="gap-items font-size-16">
+                        @if (userModel.FacebookProfile != null)
+                        {
+                            <a class="text-facebook" href="@userModel.FacebookProfile"><i class="fa fa-facebook"></i></a>
+                        }
+                        @if (userModel.TwitterProfile != null)
+                        {
+                            <a class="text-instagram" href="@userModel.TwitterProfile"><i class="fa fa-instagram"></i></a>
+                        }
+                        @if (userModel.InstagramProfile != null)
+                        {
+                            <a class="text-twitter" href="@userModel.InstagramProfile"><i class="fa fa-twitter"></i></a>
+                        }
+                    </div>
+                    <ul class="flexbox flex-justified text-center p-20">
+                        <li class="br-1 border-light">
+                            <span class="text-muted">Takipçiler</span><br>
+                            <span class="font-size-20">@userModel.SubscriberCount</span>
+                        </li>
+                        <li class="br-1 border-light">
+                            <span class="text-muted">Takip Edilenler</span><br>
+                            <span class="font-size-20">@userModel.SubscribedCount</span>
+                        </li>
+                        <li class="br-1 border-light">
+                            <span class="text-muted">Yorum Sayısı</span><br>
+                            <span class="font-size-20">@userModel.CommentCount</span>
+                        </li>
+                        <li>
+                            <span class="text-muted">Üye Puanı</span><br>
+                            <span class="font-size-20">@userModel.ExperienceScore</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        @*Kişisel Bilgilerin Bulunduğu Kısım*@
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h5 class="box-title">Kişisel Bilgiler</h5>
+                    </div>
+                    <div class="box-body p-0">
+                        <div class="media-list media-list-hover media-list-divided">
+                            <a class="media media-single" href="#">
+                                <span class="avatar avatar-sm bg-primary"><i class="fa fa-calendar-times-o"></i></span>
+                                <span class="title"><b>Kayıt Tarihi:</b> @userModel.RegisterDate.ToString("dd MMMM yyyy")</span>
+                            </a>
+                            <a class="media media-single" href="#">
+                                <span class="avatar avatar-sm bg-primary"><i class="fa fa-pagelines"></i></span>
+                                <span class="title"><b>Son Baktığı Sayfa:</b> @userModel.LastPageViewed</span>
+                            </a>
+                            <a class="media media-single" href="#">
+                                <span class="avatar avatar-sm bg-primary"><i class="fa fa-genderless"></i></span>
+                                <span class="title"><b>Cinsiyet:</b> @userModel.Gender</span>
+                            </a>
+                            <a class="media media-single" href="#">
+                                <span class="avatar avatar-sm bg-success"><i class="fa fa-birthday-cake"></i></span>
+                                <span class="title"><b>Doğum Tarihi:</b> @userModel.DateOfBirth.Value.ToString("dd MMMM yyyy")</span>
+                            </a>
+                            <a class="media media-single" href="#">
+                                <span class="avatar avatar-sm bg-danger"><i class="fa fa-address-card"></i></span>
+                                <span class="title"><b>Yaşadığı Yer:</b> @userModel.City</span>
+                            </a>
+                            @if (userModel.Status == "Banned")
+                            {
+                                <a class="media media-single" href="#">
+                                    <span class="avatar avatar-sm bg-danger"><i class="fa fa-address-card"></i></span>
+                                    <span class="title">
+                                        <b>Cezalar:</b>
+                                        DövizApp kurallarına uymayan ve üyelerine yakışmayan üslup, polemik, tartışma, konu dışı yorumlar, ilgisiz grafik paylaşımı, geri bildirim ihlali ve/veya reklam paylaşımı nedeniyle bu üyeliğin bazı hakları @userModel.BannedEndDate tarihine kadar devredışı bırakılmıştır.
+                                    </span>
+                                </a>
+                            }
+                            @if (userModel.Status == "Frozen")
+                            {
+                                <a class="media media-single" href="#">
+                                    <span class="avatar avatar-sm bg-danger"><i class="fa fa-address-card"></i></span>
+                                    <span class="title">
+                                        <b>Cezalar:</b>
+                                        Bu hesap @userModel.FrozenEndDate tarihinde dondurulmuştur.
+                                    </span>
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*Tabların Bulunduğu Yorum Kısmı*@
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h4 class="box-title">Yorumlar</h4>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs margin-bottom margin-top-10 profilTabs">
+                    <li class=" nav-item"> <a href="#tumu" class="nav-link active commenttabs" data-toggle="tab" aria-expanded="false" data-href="Tumu">Tümü</a> </li>
+                    <li class="nav-item"> <a href="#begenilen" class="nav-link commenttabs" data-toggle="tab" aria-expanded="false" data-href="Begenilen">Beğenilen</a> </li>
+                    <li class="nav-item"> <a href="#grafik" class="nav-link commenttabs" data-toggle="tab" aria-expanded="true" data-href="Grafik">Grafik</a> </li>
+                    <li class="nav-item"> <a href="#anket" class="nav-link commenttabs" data-toggle="tab" aria-expanded="true" data-href="Anket">Anket</a> </li>
+                    <li class="nav-item"> <a href="#takipciler" class="nav-link subscribetabs" data-toggle="tab" aria-expanded="true" data-href="Takipciler">Takipçiler</a> </li>
+                    <li class="nav-item"> <a href="#takipedilenler" class="nav-link subscribetabs" data-toggle="tab" aria-expanded="true" data-href="TakipEdilenler">Takip Edilenler</a> </li>
+
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div id="tumu" class="tab-pane active">
+
+                    </div>
+                    <div id="begenilen" class="tab-pane">
+
+                    </div>
+                    <div id="grafik" class="tab-pane">
+
+                    </div>
+                    <div id="anket" class="tab-pane">
+
+                    </div>
+                    <div id="takipciler" class="tab-pane">
+                        <div class="col-lg-12 col-12">
+                            <div class="box">
+                                <div class="box-body p-0 comments-body">
+                                    <div class="media-list media-list-hover media-list-divided inner-user-div" style="height: 345px">
+                                        @if (ViewBag.GetSubscribers != null && ((IEnumerable<dynamic>)ViewBag.GetSubscribers).Count() > 0)
+                                        {
+                                            @foreach (var item in ViewBag.GetSubscribers)
+                                            {
+                                                <div class="media media-single">
+                                                    <div style="text-align:center; min-width:78px">
+                                                        @for (int i = 0; i < item.UserLevel; i++)
+                                                        {
+                                                            <i class="fa fa-star" style="color: #fcc525;"></i>
+                                                        }
+                                                        <br />
+
+                                                        <a href="/profil/@item.Username" class="avatar">
+                                                            <img src="~/assets/images/avatar/@item.ImagePath" alt="@item.Username">
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="media-body">
+                                                        <h6><a href="#">@item.Username</a></h6>
+                                                        <small class="text-fader"><i class="fa fa-location-arrow"></i>@item.City</small>
+                                                        <small class="text-fader"><i class="fa fa-group">@item.SubscriberCount</i></small>
+                                                    </div>
+
+                                                    <div class="media-right">
+
+                                                        @if (item.IsSubscribed != 0)
+                                                        {
+
+                                                            <a class="btn btn-block btn-danger btn-sm" href="#" onclick="UnScribe(this,@item.UserId, 'profile')">Takibi Bırak</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a class="btn btn-block btn-success btn-sm" href="#" onclick="AddScribe(this,@item.UserId, 'profile')">Takip Et</a>
+                                                        }
+
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <p>Kullanıcının takipçisi bulunmuyor.</p>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="takipedilenler" class="tab-pane">
+                        <div class="col-lg-12 col-12">
+                            <div class="box">
+                                <div class="box-body p-0">
+                                    <div class="media-list media-list-hover media-list-divided inner-user-div" style="height: 345px">
+                                        @if (ViewBag.GetSubscribeds != null && ((IEnumerable<dynamic>)ViewBag.GetSubscribeds).Count() > 0)
+                                        {
+                                            @foreach (var item in ViewBag.GetSubscribeds)
+                                            {
+                                                <div class="media media-single">
+                                                    <div style="text-align:center; min-width:78px">
+                                                        @for (int i = 0; i < item.UserLevel; i++)
+                                                        {
+                                                            <i class="fa fa-star" style="color: #fcc525;"></i>
+                                                        }
+                                                        <br />
+
+                                                        <a href="/profil/@item.Username" class="avatar">
+                                                            <img src="~/assets/images/avatar/@item.ImagePath" alt="@item.Username">
+                                                        </a>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h6><a href="#">@item.Username</a></h6>
+                                                        <small class="text-fader"><i class="fa fa-location-arrow"></i> @item.City</small>
+                                                        <br />
+                                                        <small class="text-fader"><i class="fa fa-group">@item.SubscriberCount</i></small>
+                                                    </div>
+
+                                                    <div class="media-right">
+
+                                                        @if (item.IsSubscribed != 0)
+                                                        {
+                                                            <a class="btn btn-block btn-danger btn-sm" href="#" onclick="UnScribe(this,@item.UserId, 'profile')">Takibi Bırak</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a class="btn btn-block btn-success btn-sm" href="#" onclick="AddScribe(this,@item.UserId, 'profile')">Takip Et</a>
+                                                        }
+
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <p>Kullanıcının takip ettiği kimse yok.</p>
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+
+                    <input type="hidden" id="UserId" value="@ViewBag.UserId" />
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        @*Üye Bilgilerinin Olduğu Kısım*@
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <div class="box p-30 pt-50 text-center">
+                    <div class="box">
+                        <div class="box-body">
+                            @if (userModel.UserToTargetIsBlocked == true)
+                            {
+                                <a class="btn btn-block btn-warning btn-sm" href="#" onclick="UnBlock(this,@ViewBag.UserId, 'profile')">Engeli Kaldır</a>
+                            }
+                            @if (userModel.TargetToUserIsBlocked == true)
+                            {
+                                <a class="btn btn-block btn-danger btn-sm" href="#" onclick="AddBlock(this,@ViewBag.UserId, 'profile')">Engelle</a>
+                            }
+                            <a class="btn btn-block btn-success btn-sm" href="#" onclick="AddScribe(this,@ViewBag.UserId,'profile')">Takip Et</a>
+                        </div>
+                    </div>
+                    <div>
+                        <a class="avatar avatar-xxl status-success mb-3" href="/profil/@userModel.Username">
+                            <img src="~/assets/images/avatar/@userModel.AvatarPath" alt="...">
+                        </a>
+                    </div>
+
+                    <h5 class="mt-5 "><a class="text-default hover-primary" href="#">@userModel.Username</a></h5>
+                    @if (userModel.Job != null)
+                    {
+                        <p><small class="font-size-12">@userModel.Job</small></p>
+                    }
+                    @* TODO: SlimScroll koyulacak. 5000 karakter sınır var girilebilir. *@
+                    <p class="text-light font-size-12 mb-50">@userModel.PersonalOpinion</p>
+                    <div class="gap-items font-size-16">
+                        @if (userModel.FacebookProfile != null)
+                        {
+                            <a class="text-facebook" href="@userModel.FacebookProfile"><i class="fa fa-facebook"></i></a>
+                        }
+                        @if (userModel.TwitterProfile != null)
+                        {
+                            <a class="text-instagram" href="@userModel.TwitterProfile"><i class="fa fa-instagram"></i></a>
+                        }
+                        @if (userModel.InstagramProfile != null)
+                        {
+                            <a class="text-twitter" href="@userModel.InstagramProfile"><i class="fa fa-twitter"></i></a>
+                        }
+                    </div>
+                    <ul class="flexbox flex-justified text-center p-20">
+                        <li class="br-1 border-light">
+                            <span class="text-muted">Takipçiler</span><br>
+                            <span class="font-size-20">@userModel.SubscriberCount</span>
+                        </li>
+                        <li class="br-1 border-light">
+                            <span class="text-muted">Takip Edilenler</span><br>
+                            <span class="font-size-20">@userModel.SubscribedCount</span>
+                        </li>
+                        <li class="br-1 border-light">
+                            <span class="text-muted">Yorum Sayısı</span><br>
+                            <span class="font-size-20">@userModel.CommentCount</span>
+                        </li>
+                        <li>
+                            <span class="text-muted">Üye Puanı</span><br>
+                            <span class="font-size-20">@userModel.ExperienceScore</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        @*Kişisel Bilgilerin Bulunduğu Kısım*@
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h5 class="box-title">Kişisel Bilgiler</h5>
+                    </div>
+                    <div class="box-body p-0">
+                        <div class="media-list media-list-hover media-list-divided">
+                            <a class="media media-single" href="#">
+                                <span class="avatar avatar-sm bg-primary"><i class="fa fa-calendar-times-o"></i></span>
+                                <span class="title"><b>Kayıt Tarihi:</b> @userModel.RegisterDate.ToString("dd MMMM yyyy")</span>
+                            </a>
+                            <a class="media media-single" href="#">
+                                <span class="avatar avatar-sm bg-primary"><i class="fa fa-pagelines"></i></span>
+                                <span class="title"><b>Son Baktığı Sayfa:</b> @userModel.LastPageViewed</span>
+                            </a>
+                            <a class="media media-single" href="#">
+                                <span class="avatar avatar-sm bg-primary"><i class="fa fa-genderless"></i></span>
+                                <span class="title"><b>Cinsiyet:</b> @userModel.Gender</span>
+                            </a>
+                            <a class="media media-single" href="#">
+                                <span class="avatar avatar-sm bg-success"><i class="fa fa-birthday-cake"></i></span>
+                                <span class="title"><b>Doğum Tarihi:</b> @userModel.DateOfBirth.Value.ToString("dd MMMM yyyy")</span>
+                            </a>
+                            <a class="media media-single" href="#">
+                                <span class="avatar avatar-sm bg-danger"><i class="fa fa-address-card"></i></span>
+                                <span class="title"><b>Yaşadığı Yer:</b> @userModel.City</span>
+                            </a>
+                            @if (userModel.Status == "Banned")
+                            {
+                                <a class="media media-single" href="#">
+                                    <span class="avatar avatar-sm bg-danger"><i class="fa fa-address-card"></i></span>
+                                    <span class="title">
+                                        <b>Cezalar:</b>
+                                        DövizApp kurallarına uymayan ve üyelerine yakışmayan üslup, polemik, tartışma, konu dışı yorumlar, ilgisiz grafik paylaşımı, geri bildirim ihlali ve/veya reklam paylaşımı nedeniyle bu üyeliğin bazı hakları @userModel.BannedEndDate tarihine kadar devredışı bırakılmıştır.
+                                    </span>
+                                </a>
+                            }
+                            @if (userModel.Status == "Frozen")
+                            {
+                                <a class="media media-single" href="#">
+                                    <span class="avatar avatar-sm bg-danger"><i class="fa fa-address-card"></i></span>
+                                    <span class="title">
+                                        <b>Cezalar:</b>
+                                        Bu hesap @userModel.FrozenEndDate tarihinde dondurulmuştur.
+                                    </span>
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @if (userModel.TargetToUserIsBlocked == true)
+        {
+            <div class="row">
+                <div class="col-md-12 col-lg-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h5 class="box-title">Uyarı!</h5>
+                        </div>
+                        <div class="box-body p-0">
+                            <a class="media media-single" href="#">
+                                <span class="avatar avatar-sm bg-primary"><i class="fa fa-warning"></i></span>
+                                <span class="title">Görüntülemekte olduğunuz kullanıcı sizi engellemiş. Bu sebepten profil sahibinin yorum ve bazı diğer bilgilerine erişiminizi kısıtladık.</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+}
+
+
+<!-- Popup CSS -->
+<link href="/assets/vendor_components/Magnific-Popup-master/dist/magnific-popup.css" rel="stylesheet">
+
+<!-- Magnific popup JavaScript -->
+<script src="/assets/vendor_components/Magnific-Popup-master/dist/jquery.magnific-popup.min.js"></script>
+<script src="/assets/vendor_components/Magnific-Popup-master/dist/jquery.magnific-popup-init.js"></script>
+
+<script src="~/js/userprofile.js"></script>
+<script src="~/js/comments.js"></script>

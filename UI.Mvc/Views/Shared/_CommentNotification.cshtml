@@ -1,0 +1,681 @@
+﻿@model Common.Model.BaseResponse
+@{
+    var commentModel = (Common.Model.Notification.Response.ResGetCommentNot)Model.data;
+}
+
+@if (commentModel.Comments.Count > 0)
+{
+    @foreach (var item in commentModel.Comments)
+    {
+        if (item.CommentParentId != null)
+        {
+            @foreach (var parent in commentModel.ParentComment)
+            {
+                @if (item.CommentParentId == parent.Id)
+                {
+                    <div class="box-body p-0 comments-body mainDiv">
+                        <div>
+                            <button id="btnDelete" type="button" onclick="NotificationUpdateIsDelete(this)" class="close" data-commentid="@item.Id">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <div class="media-list media-list-hover media-list-divided comment-list" id="media-@item.Id">
+                                <div class="media">
+                                    <div style="text-align:center; min-width:78px">
+
+                                        @for (int i = 0; i < item.UserLevel; i++)
+                                        {
+                                            <i class="fa fa-star" style="color: #fcc525;"></i>
+                                        }
+                                        <br />
+                                        @{
+                                            var isOnline = "status-danger";
+                                            var OnlineStatusMessage = "Çevrimdışı";
+                                            if (item.IsOnline)
+                                            {
+                                                isOnline = "status-success";
+                                                OnlineStatusMessage = "Çevrimiçi";
+                                            }
+                                        }
+                                        <a class="avatar @isOnline" href="/profil/@item.Username" title="@OnlineStatusMessage">
+                                            <img src="/assets/images/avatar/@item.AvatarPath" alt="@item.Username">
+                                        </a>
+                                        <br />
+                                        <strong><a href="/profil/@item.Username">@item.Username</a></strong>
+                                    </div>
+
+                                    <div class="media-body">
+                                        <p>
+                                            <time class="float-right" datetime="@item.DateTime">
+                                                <i class="fa fa-clock-o"></i>
+                                                @{
+                                                    if (item.DateTime.ToShortDateString() == DateTime.Today.ToShortDateString())
+                                                    {
+                                                        <span>@item.DateTime.ToString("HH:mm")</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>@item.DateTime.ToString("dd.MM.yyyy hh:mm")</span>
+                                                    }
+                                                }
+                                            </time>
+                                        </p>
+
+                                        <p class="commenttext" style="font-size:15px !important;">@Html.Raw(item.Message)</p>
+
+                                        @if (!String.IsNullOrEmpty(item.Graphic))
+                                        {
+                                            <div class="image-popups">
+                                                <a href="/assets/images/comment/@item.Graphic" data-effect="mfp-zoom-in">
+                                                    <img src="/assets/images/comment/@item.Graphic" class="img-responsive" alt="">
+                                                </a>
+                                            </div>
+                                        }
+
+                                        @{
+                                            //Anket
+                                            if (item.PollId != null)
+                                            {
+                                                if (item.PollEndDate.Value < DateTime.Now)
+                                                {
+                                                    <div class="polloptions">
+
+                                                        <ul>
+                                                            @foreach (var option in item.PollOptions)
+                                                            {
+                                                                //TODO: 0 bölünemez. Düzeltilmeli anket seçeneklerine oy verilmemiş olabilir.
+                                                                decimal totalVote = 0;
+                                                                if (item.TotalPollVotes > 0)
+                                                                {
+                                                                    if (option.Vote != 0)
+                                                                    {
+                                                                        totalVote = Convert.ToDecimal(Convert.ToDecimal(option.Vote) / Convert.ToDecimal(item.TotalPollVotes));
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        totalVote = 0;
+                                                                    }
+                                                                }
+                                                                decimal oran = totalVote * 100;
+
+                                                                <li>
+                                                                    <span class="perc-back" style="width:@Math.Round(oran)%"></span>
+
+                                                                    @{
+                                                                        if (User.Identity.IsAuthenticated && item.UserPollVote.IsVoted && item.UserPollVote.VoteId == option.OptionId)
+                                                                        {
+                                                                            <input type="radio" data-pollid="@item.PollId"
+                                                                                   name="poolOptionRadio"
+                                                                                   data-optionid="@option.OptionId"
+                                                                                   id="answer-@option.OptionId"
+                                                                                   value="@option.Vote" checked>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <input type="radio" data-pollid="@item.PollId"
+                                                                                   name="poolOptionRadio"
+                                                                                   data-optionid="@option.OptionId"
+                                                                                   id="answer-@option.OptionId"
+                                                                                   value="@option.Vote" disabled style="display:none">
+                                                                        }
+                                                                    }
+                                                                    <label for="answer-@option.OptionId">@option.Option</label>
+                                                                    <span class="perc-number">@Math.Round(oran)%</span>
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="polloptions">
+                                                        <ul>
+                                                            @foreach (var option in item.PollOptions)
+                                                            {
+                                                                decimal totalVote = 0;
+                                                                if (item.TotalPollVotes > 0)
+                                                                {
+                                                                    if (option.Vote != 0)
+                                                                    {
+                                                                        totalVote = Convert.ToDecimal(Convert.ToDecimal(option.Vote) / Convert.ToDecimal(item.TotalPollVotes));
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        totalVote = 0;
+                                                                    }
+                                                                }
+                                                                decimal oran = totalVote * 100;
+
+                                                                //decimal totalVote = Convert.ToDecimal(Convert.ToDecimal(option.Vote) / Convert.ToDecimal(Model.TotalPollVotes));
+                                                                //decimal oran = totalVote * 100;
+
+                                                                <li>
+
+                                                                    @{
+                                                                        if (User.Identity.IsAuthenticated)
+                                                                        {
+                                                                            if (item.UserPollVote.IsVoted)
+                                                                            {
+                                                                                if (item.UserPollVote.VoteId == option.OptionId)
+                                                                                {
+                                                                                    <span class="perc-back" style="width:@Math.Round(oran)%"></span>
+                                                                                    <input type="radio" data-pollid="@item.PollId"
+                                                                                           name="poolOptionRadio"
+                                                                                           data-optionid="@option.OptionId"
+                                                                                           id="answer-@option.OptionId"
+                                                                                           value="@option.Vote" checked>
+                                                                                    <label for="answer-@option.OptionId">@option.Option</label>
+                                                                                    <span class="perc-number">@Math.Round(oran)%</span>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <span class="perc-back" style="width:@Math.Round(oran)%;"></span>
+                                                                                    <input type="radio"
+                                                                                           data-pollid="@item.PollId"
+                                                                                           name="poolOptionRadio"
+                                                                                           data-optionid="@option.OptionId"
+                                                                                           id="answer-@option.OptionId"
+                                                                                           value="@option.Vote" disabled>
+
+                                                                                    <label for="answer-@option.OptionId">@option.Option</label>
+                                                                                    <span class="perc-number">@Math.Round(oran)%</span>
+
+                                                                                }
+
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <span class="perc-back" style="width:@Math.Round(oran)%; display:none"></span>
+                                                                                <input type="radio"
+                                                                                       data-pollid="@item.PollId"
+                                                                                       name="poolOptionRadio"
+                                                                                       data-optionid="@option.OptionId"
+                                                                                       id="answer-@option.OptionId"
+                                                                                       value="@option.Vote">
+
+                                                                                <label for="answer-@option.OptionId">@option.Option</label>
+                                                                                <span class="perc-number" style="display:none">@Math.Round(oran)%</span>
+                                                                            }
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <span class="perc-back" style="width:@Math.Round(oran)%; display:none"> </span>
+                                                                            <input type="radio"
+                                                                                   data-pollid="@item.PollId"
+                                                                                   name="poolOptionRadio"
+                                                                                   data-optionid="@option.OptionId"
+                                                                                   id="answer-@option.OptionId"
+                                                                                   value="@option.Vote">
+
+                                                                            <label for="answer-@option.OptionId">@option.Option</label>
+                                                                            <span class="perc-number" style="display:none">@Math.Round(oran)%</span>
+                                                                        }
+                                                                    }
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                }
+
+                                            }
+                                        }
+                                        <div class="media-block-actions">
+                                            <nav class="nav nav-dot-separated no-gutters">
+                                                <div class="nav-item">
+                                                    <a class="nav-link text-success" data-commentid="@item.Id" onclick="LikeOrDislike(this,1)" href="#"><i class="fa fa-thumbs-up"></i> (<span>@item.LikeCount</span>)</a>
+                                                </div>
+                                                <div class="nav-item">
+                                                    <a class="nav-link text-danger" data-commentid="@item.Id" onclick="LikeOrDislike(this,0)" href="#"><i class="fa fa-thumbs-down"></i> (<span>@item.DislikeCount</span>)</a>
+                                                </div>
+                                                <div class="nav-item">
+                                                    <div class="media-hover-show">
+                                                        <a class="nav-link text-success" href="#" data-toggle="tooltip" title="" data-original-title="Cevap Yaz" onclick="Reply(this)" data-commentId="@item.Id" data-marketid="@item.MarketId">
+                                                            <i class="ion-chatbubble-working"></i> Cevap Yaz
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div style="padding-left:50px !important">
+                                <h6 style="padding-left:10px;">Bu yorumla ilgilidir:</h6>
+                                @*ana yorum*@
+                                <div class="media-list media-list-hover media-list-divided comment-list" id="media-@parent.Id">
+                                    <div class="media" style="background-color: lightyellow;">
+                                        <div class="media-body">
+                                            <p>
+                                                <time class="float-right" datetime="@parent.DateTime">
+                                                    <i class="fa fa-clock-o"></i>
+                                                    @{
+                                                        if (parent.DateTime.ToShortDateString() == DateTime.Today.ToShortDateString())
+                                                        {
+                                                            <span>@parent.DateTime.ToString("HH:mm")</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>@parent.DateTime.ToString("dd.MM.yyyy hh:mm")</span>
+                                                        }
+                                                    }
+                                                </time>
+                                            </p>
+                                            <p class="commenttext" style="font-size:15px !important;">@Html.Raw(parent.Message)</p>
+
+                                            @if (!String.IsNullOrEmpty(parent.Graphic))
+                                            {
+                                                <div class="image-popups">
+                                                    <a href="/assets/images/comment/@parent.Graphic" data-effect="mfp-zoom-in">
+                                                        <img src="/assets/images/comment/@parent.Graphic" class="img-responsive" alt="">
+                                                    </a>
+                                                </div>
+                                            }
+
+                                            @{
+                                                //Anket
+                                                if (parent.PollId != null)
+                                                {
+                                                    if (parent.PollEndDate.Value < DateTime.Now)
+                                                    {
+                                                        <div class="polloptions">
+
+                                                            <ul>
+                                                                @foreach (var option in parent.PollOptions)
+                                                                {
+                                                                    //TODO: 0 bölünemez. Düzeltilmeli anket seçeneklerine oy verilmemiş olabilir.
+                                                                    decimal totalVote = 0;
+                                                                    if (parent.TotalPollVotes > 0)
+                                                                    {
+                                                                        if (option.Vote != 0)
+                                                                        {
+                                                                            totalVote = Convert.ToDecimal(Convert.ToDecimal(option.Vote) / Convert.ToDecimal(parent.TotalPollVotes));
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            totalVote = 0;
+                                                                        }
+                                                                    }
+                                                                    decimal oran = totalVote * 100;
+
+                                                                    <li>
+                                                                        <span class="perc-back" style="width:@Math.Round(oran)%"></span>
+
+                                                                        @{
+                                                                            if (User.Identity.IsAuthenticated && parent.UserPollVote.IsVoted && parent.UserPollVote.VoteId == option.OptionId)
+                                                                            {
+                                                                                <input type="radio" data-pollid="@parent.PollId"
+                                                                                       name="poolOptionRadio"
+                                                                                       data-optionid="@option.OptionId"
+                                                                                       id="answer-@option.OptionId"
+                                                                                       value="@option.Vote" checked>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <input type="radio" data-pollid="@parent.PollId"
+                                                                                       name="poolOptionRadio"
+                                                                                       data-optionid="@option.OptionId"
+                                                                                       id="answer-@option.OptionId"
+                                                                                       value="@option.Vote" disabled style="display:none">
+                                                                            }
+                                                                        }
+                                                                        <label for="answer-@option.OptionId">@option.Option</label>
+                                                                        <span class="perc-number">@Math.Round(oran)%</span>
+                                                                    </li>
+                                                                }
+                                                            </ul>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="polloptions">
+                                                            <ul>
+                                                                @foreach (var option in parent.PollOptions)
+                                                                {
+                                                                    decimal totalVote = 0;
+                                                                    if (parent.TotalPollVotes > 0)
+                                                                    {
+                                                                        if (option.Vote != 0)
+                                                                        {
+                                                                            totalVote = Convert.ToDecimal(Convert.ToDecimal(option.Vote) / Convert.ToDecimal(parent.TotalPollVotes));
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            totalVote = 0;
+                                                                        }
+                                                                    }
+                                                                    decimal oran = totalVote * 100;
+
+                                                                    //decimal totalVote = Convert.ToDecimal(Convert.ToDecimal(option.Vote) / Convert.ToDecimal(Model.TotalPollVotes));
+                                                                    //decimal oran = totalVote * 100;
+
+                                                                    <li>
+
+                                                                        @{
+                                                                            if (User.Identity.IsAuthenticated)
+                                                                            {
+                                                                                if (parent.UserPollVote.IsVoted)
+                                                                                {
+                                                                                    if (parent.UserPollVote.VoteId == option.OptionId)
+                                                                                    {
+                                                                                        <span class="perc-back" style="width:@Math.Round(oran)%"></span>
+                                                                                        <input type="radio" data-pollid="@parent.PollId"
+                                                                                               name="poolOptionRadio"
+                                                                                               data-optionid="@option.OptionId"
+                                                                                               id="answer-@option.OptionId"
+                                                                                               value="@option.Vote" checked>
+                                                                                        <label for="answer-@option.OptionId">@option.Option</label>
+                                                                                        <span class="perc-number">@Math.Round(oran)%</span>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <span class="perc-back" style="width:@Math.Round(oran)%;"></span>
+                                                                                        <input type="radio"
+                                                                                               data-pollid="@parent.PollId"
+                                                                                               name="poolOptionRadio"
+                                                                                               data-optionid="@option.OptionId"
+                                                                                               id="answer-@option.OptionId"
+                                                                                               value="@option.Vote" disabled>
+
+                                                                                        <label for="answer-@option.OptionId">@option.Option</label>
+                                                                                        <span class="perc-number">@Math.Round(oran)%</span>
+
+                                                                                    }
+
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <span class="perc-back" style="width:@Math.Round(oran)%; display:none"></span>
+                                                                                    <input type="radio"
+                                                                                           data-pollid="@parent.PollId"
+                                                                                           name="poolOptionRadio"
+                                                                                           data-optionid="@option.OptionId"
+                                                                                           id="answer-@option.OptionId"
+                                                                                           value="@option.Vote">
+
+                                                                                    <label for="answer-@option.OptionId">@option.Option</label>
+                                                                                    <span class="perc-number" style="display:none">@Math.Round(oran)%</span>
+                                                                                }
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <span class="perc-back" style="width:@Math.Round(oran)%; display:none"> </span>
+                                                                                <input type="radio"
+                                                                                       data-pollid="@parent.PollId"
+                                                                                       name="poolOptionRadio"
+                                                                                       data-optionid="@option.OptionId"
+                                                                                       id="answer-@option.OptionId"
+                                                                                       value="@option.Vote">
+
+                                                                                <label for="answer-@option.OptionId">@option.Option</label>
+                                                                                <span class="perc-number" style="display:none">@Math.Round(oran)%</span>
+                                                                            }
+                                                                        }
+                                                                    </li>
+                                                                }
+                                                            </ul>
+                                                        </div>
+                                                    }
+
+                                                }
+                                            }
+
+                                            <div class="media-block-actions pull-left">
+                                                <p><b style="font-size:14px;">Yorum Sahibi:</b><a href="/profil/@parent.Username" style="color:darkorange;font-size:16px;"> @parent.Username</a></p>
+                                            </div>
+
+                                        </div>
+
+                                        <p><b>Sayfa: </b> @item.MarketName</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br />
+                            <hr />
+                        </div>
+                    </div>
+                }
+            }
+        }
+        else
+        {
+            <div class="box-body p-0 comments-body subDiv">
+
+                <button id="btnDelete" type="button" class="close" onclick="NotificationUpdateIsDelete(this)" data-commentid="@item.Id">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <div style="padding-left:18px;">
+                    <p><b>@item.Username</b> kullanıcısı şu yorumda sizden bahsetti;</p>
+                </div>
+
+                <div class="media-list media-list-hover media-list-divided comment-list" id="media-@item.Id">
+                    <div class="media">
+                        <div style="text-align:center; min-width:78px">
+
+                            @for (int i = 0; i < item.UserLevel; i++)
+                            {
+                                <i class="fa fa-star" style="color: #fcc525;"></i>
+                            }
+                            <br />
+                            @{
+                                var isOnline = "status-danger";
+                                var OnlineStatusMessage = "Çevrimdışı";
+                                if (item.IsOnline)
+                                {
+                                    isOnline = "status-success";
+                                    OnlineStatusMessage = "Çevrimiçi";
+                                }
+                            }
+                            <a class="avatar @isOnline" href="/profil/@item.Username" title="@OnlineStatusMessage">
+                                <img src="/assets/images/avatar/@item.AvatarPath" alt="@item.Username">
+                            </a>
+                            <br />
+                            <strong><a href="/profil/@item.Username">@item.Username</a></strong>
+                        </div>
+
+                        <div class="media-body">
+                            <p>
+                                <time class="float-right" datetime="@item.DateTime">
+                                    <i class="fa fa-clock-o"></i>
+                                    @{
+                                        if (item.DateTime.ToShortDateString() == DateTime.Today.ToShortDateString())
+                                        {
+                                            <span>@item.DateTime.ToString("HH:mm")</span>
+                                        }
+                                        else
+                                        {
+                                            <span>@item.DateTime.ToString("dd.MM.yyyy hh:mm")</span>
+                                        }
+                                    }
+                                </time>
+                            </p>
+
+                            <p class="commenttext">@Html.Raw(item.Message)</p>
+
+                            @if (!String.IsNullOrEmpty(item.Graphic))
+                            {
+                                <div class="image-popups">
+                                    <a href="/assets/images/comment/@item.Graphic" data-effect="mfp-zoom-in">
+                                        <img src="/assets/images/comment/@item.Graphic" class="img-responsive" alt="">
+                                    </a>
+                                </div>
+                            }
+
+                            @{
+                                //Anket
+                                if (item.PollId != null)
+                                {
+                                    if (item.PollEndDate.Value < DateTime.Now)
+                                    {
+                                        <div class="polloptions">
+
+                                            <ul>
+                                                @foreach (var option in item.PollOptions)
+                                                {
+                                                    //TODO: 0 bölünemez. Düzeltilmeli anket seçeneklerine oy verilmemiş olabilir.
+                                                    decimal totalVote = 0;
+                                                    if (item.TotalPollVotes > 0)
+                                                    {
+                                                        if (option.Vote != 0)
+                                                        {
+                                                            totalVote = Convert.ToDecimal(Convert.ToDecimal(option.Vote) / Convert.ToDecimal(item.TotalPollVotes));
+                                                        }
+                                                        else
+                                                        {
+                                                            totalVote = 0;
+                                                        }
+                                                    }
+                                                    decimal oran = totalVote * 100;
+
+                                                    <li>
+                                                        <span class="perc-back" style="width:@Math.Round(oran)%"></span>
+
+                                                        @{
+                                                            if (User.Identity.IsAuthenticated && item.UserPollVote.IsVoted && item.UserPollVote.VoteId == option.OptionId)
+                                                            {
+                                                                <input type="radio" data-pollid="@item.PollId"
+                                                                       name="poolOptionRadio"
+                                                                       data-optionid="@option.OptionId"
+                                                                       id="answer-@option.OptionId"
+                                                                       value="@option.Vote" checked>
+                                                            }
+                                                            else
+                                                            {
+                                                                <input type="radio" data-pollid="@item.PollId"
+                                                                       name="poolOptionRadio"
+                                                                       data-optionid="@option.OptionId"
+                                                                       id="answer-@option.OptionId"
+                                                                       value="@option.Vote" disabled style="display:none">
+                                                            }
+                                                        }
+                                                        <label for="answer-@option.OptionId">@option.Option</label>
+                                                        <span class="perc-number">@Math.Round(oran)%</span>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="polloptions">
+                                            <ul>
+                                                @foreach (var option in item.PollOptions)
+                                                {
+                                                    decimal totalVote = 0;
+                                                    if (item.TotalPollVotes > 0)
+                                                    {
+                                                        if (option.Vote != 0)
+                                                        {
+                                                            totalVote = Convert.ToDecimal(Convert.ToDecimal(option.Vote) / Convert.ToDecimal(item.TotalPollVotes));
+                                                        }
+                                                        else
+                                                        {
+                                                            totalVote = 0;
+                                                        }
+                                                    }
+                                                    decimal oran = totalVote * 100;
+
+                                                    //decimal totalVote = Convert.ToDecimal(Convert.ToDecimal(option.Vote) / Convert.ToDecimal(Model.TotalPollVotes));
+                                                    //decimal oran = totalVote * 100;
+
+                                                    <li>
+
+                                                        @{
+                                                            if (User.Identity.IsAuthenticated)
+                                                            {
+                                                                if (item.UserPollVote.IsVoted)
+                                                                {
+                                                                    if (item.UserPollVote.VoteId == option.OptionId)
+                                                                    {
+                                                                        <span class="perc-back" style="width:@Math.Round(oran)%"></span>
+                                                                        <input type="radio" data-pollid="@item.PollId"
+                                                                               name="poolOptionRadio"
+                                                                               data-optionid="@option.OptionId"
+                                                                               id="answer-@option.OptionId"
+                                                                               value="@option.Vote" checked>
+                                                                        <label for="answer-@option.OptionId">@option.Option</label>
+                                                                        <span class="perc-number">@Math.Round(oran)%</span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span class="perc-back" style="width:@Math.Round(oran)%;"></span>
+                                                                        <input type="radio"
+                                                                               data-pollid="@item.PollId"
+                                                                               name="poolOptionRadio"
+                                                                               data-optionid="@option.OptionId"
+                                                                               id="answer-@option.OptionId"
+                                                                               value="@option.Vote" disabled>
+
+                                                                        <label for="answer-@option.OptionId">@option.Option</label>
+                                                                        <span class="perc-number">@Math.Round(oran)%</span>
+
+                                                                    }
+
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span class="perc-back" style="width:@Math.Round(oran)%; display:none"></span>
+                                                                    <input type="radio"
+                                                                           data-pollid="@item.PollId"
+                                                                           name="poolOptionRadio"
+                                                                           data-optionid="@option.OptionId"
+                                                                           id="answer-@option.OptionId"
+                                                                           value="@option.Vote">
+
+                                                                    <label for="answer-@option.OptionId">@option.Option</label>
+                                                                    <span class="perc-number" style="display:none">@Math.Round(oran)%</span>
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="perc-back" style="width:@Math.Round(oran)%; display:none"> </span>
+                                                                <input type="radio"
+                                                                       data-pollid="@item.PollId"
+                                                                       name="poolOptionRadio"
+                                                                       data-optionid="@option.OptionId"
+                                                                       id="answer-@option.OptionId"
+                                                                       value="@option.Vote">
+
+                                                                <label for="answer-@option.OptionId">@option.Option</label>
+                                                                <span class="perc-number" style="display:none">@Math.Round(oran)%</span>
+                                                            }
+                                                        }
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    }
+
+                                }
+                            }
+                            <div class="media-block-actions">
+                                <nav class="nav nav-dot-separated no-gutters">
+                                    <div class="nav-item">
+                                        <a class="nav-link text-success" data-commentid="@item.Id" onclick="LikeOrDislike(this,1)" href="#"><i class="fa fa-thumbs-up"></i> (<span>@item.LikeCount</span>)</a>
+                                    </div>
+                                    <div class="nav-item">
+                                        <a class="nav-link text-danger" data-commentid="@item.Id" onclick="LikeOrDislike(this,0)" href="#"><i class="fa fa-thumbs-down"></i> (<span>@item.DislikeCount</span>)</a>
+                                    </div>
+                                    <div class="nav-item">
+                                        <div class="media-hover-show">
+                                            <a class="nav-link text-success" href="#" data-toggle="tooltip" title="" data-original-title="Cevap Yaz" onclick="Reply(this)" data-commentId="@item.Id" data-marketid="@item.MarketId">
+                                                <i class="ion-chatbubble-working"></i> Cevap Yaz
+                                            </a>
+                                        </div>
+                                    </div>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+            </div>
+        }
+    }
+}
+else
+{
+    @*<div class="callout callout-warning">*@
+        <p>Yeni bildiriminiz bulunmuyor.</p>
+    @*</div>*@   
+}

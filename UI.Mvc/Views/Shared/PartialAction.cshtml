@@ -1,0 +1,24 @@
+﻿@model Common.Model.User.Request.ReqLogin
+
+@{ Layout = null;}
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Movie</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.UsernameOrEmail)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.UsernameOrEmail)
+            @Html.ValidationMessageFor(model => model.UsernameOrEmail)
+        </div>
+
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}

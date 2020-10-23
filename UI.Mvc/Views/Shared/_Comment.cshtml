@@ -1,0 +1,449 @@
+﻿@model List<Common.Model.Comment.Response.ResGetComments>
+
+@foreach (var Model in Model)
+{
+    <div class="box-body p-0 comments-body" style="border-bottom: 1px solid #dadada; ">
+        <div class="media-list media-list-hover media-list-divided comment-list" id="media-@Model.Id">
+            <div class="media">
+                <div style="text-align:center; min-width:78px">
+
+                    @for (int i = 0; i < Model.UserLevel; i++)
+                    {
+                        <i class="fa fa-star" style="color: #fcc525;"></i>
+                    }
+                    <br />
+                    @{
+                        var isOnline = "status-danger";
+                        var OnlineStatusMessage = "Çevrimdışı";
+                        if (Model.IsOnline)
+                        {
+                            isOnline = "status-success";
+                            OnlineStatusMessage = "Çevrimiçi";
+                        }
+                    }
+                    <a class="avatar @isOnline" href="/profil/@Model.Username" title="@OnlineStatusMessage">
+                        <img src="/assets/images/avatar/@Model.AvatarPath" alt="@Model.Username">
+                    </a>
+                    <br />
+                    <strong><a href="/profil/@Model.Username">@Model.Username</a></strong>
+                </div>
+
+                <div class="media-body">
+                    <p>
+                        <time class="float-right" datetime="@Model.DateTime">
+                            <i class="fa fa-clock-o"></i>
+                            @{
+                                if (Model.DateTime.ToShortDateString() == DateTime.Today.ToShortDateString())
+                                {
+                                    <span>@Model.DateTime.ToString("HH:mm")</span>
+                                }
+                                else
+                                {
+                                    <span>@Model.DateTime.ToString("dd.MM.yyyy hh:mm")</span>
+                                }
+                            }
+                        </time>
+                    </p>
+
+                    <p class="commenttext">@Html.Raw(Model.Message)</p>
+
+                    @if (!String.IsNullOrEmpty(Model.Graphic))
+                    {
+                        <div class="image-popups">
+                            <a href="/assets/images/comment/@Model.Graphic" data-effect="mfp-zoom-in">
+                                <img src="/assets/images/comment/@Model.Graphic" class="img-responsive" alt="">
+                            </a>
+                        </div>
+
+                        <div style="text-align:center; padding:5px; margin:5px;"><a href="/konu/@Model.PollOrGraphicUrl/@Model.Id" class="badge badge-pill badge-success font-size-16">Detaylar ve Yorumlar</a></div>
+
+                    }
+                    @{
+                        //Anket
+                        if (Model.PollId != null)
+                        {
+                            //Anket sona ermiş ise;
+                            if (Model.PollEndDate.Value < DateTime.Now)
+                            {
+                                <div class="polloptions">
+
+                                    <ul>
+                                        @foreach (var option in Model.PollOptions)
+                                        {
+                                            //TODO: 0 bölünemez. Düzeltilmeli anket seçeneklerine oy verilmemiş olabilir.
+                                            decimal totalVote = 0;
+                                            if (Model.TotalPollVotes > 0)
+                                            {
+                                                if (option.Vote != 0)
+                                                {
+                                                    totalVote = Convert.ToDecimal(Convert.ToDecimal(option.Vote) / Convert.ToDecimal(Model.TotalPollVotes));
+                                                }
+                                                else
+                                                {
+                                                    totalVote = 0;
+                                                }
+                                            }
+                                            decimal oran = totalVote * 100;
+
+                                            <li>
+                                                <span class="perc-back" style="width:@Math.Round(oran)%"></span>
+
+                                                @{
+                                                    if (User.Identity.IsAuthenticated && Model.UserPollVote.IsVoted && Model.UserPollVote.VoteId == option.OptionId)
+                                                    {
+                                                        <input type="radio"
+                                                               onchange="PollOptionChange(this)"
+                                                               data-pollid="@Model.PollId"
+                                                               name="poolOptionRadio-@Model.PollId"
+                                                               data-optionid="@option.OptionId"
+                                                               id="answer-@option.OptionId"
+                                                               value="@option.Vote" checked>
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="radio"
+                                                               onchange="PollOptionChange(this)"
+                                                               data-pollid="@Model.PollId"
+                                                               name="poolOptionRadio-@Model.PollId"
+                                                               data-optionid="@option.OptionId"
+                                                               id="answer-@option.OptionId"
+                                                               value="@option.Vote" disabled style="display:none">
+                                                    }
+                                                }
+                                                <label for="answer-@option.OptionId">@option.Option</label>
+                                                <span class="perc-number">@Math.Round(oran)%</span>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+
+                                <h5>
+                                    Bu anket için toplam @Model.TotalPollVotes oy kullanıldı ve sonuçlandı.
+                                </h5>
+
+                                <div style="text-align:center; padding:5px; margin:5px;"><a href="/konu/@Model.PollOrGraphicUrl/@Model.Id" class="badge badge-pill badge-success font-size-16">Detaylar ve Yorumlar</a></div>
+                            }
+                            //Anket sona ermemişse;
+                            else
+                            {
+                                <div class="polloptions">
+                                    <ul>
+                                        @foreach (var option in Model.PollOptions)
+                                        {
+                                            decimal totalVote = 0;
+                                            if (Model.TotalPollVotes > 0)
+                                            {
+                                                if (option.Vote != 0)
+                                                {
+                                                    totalVote = Convert.ToDecimal(Convert.ToDecimal(option.Vote) / Convert.ToDecimal(Model.TotalPollVotes));
+                                                }
+                                                else
+                                                {
+                                                    totalVote = 0;
+                                                }
+                                            }
+                                            decimal oran = totalVote * 100;
+
+                                            //decimal totalVote = Convert.ToDecimal(Convert.ToDecimal(option.Vote) / Convert.ToDecimal(Model.TotalPollVotes));
+                                            //decimal oran = totalVote * 100;
+
+                                            <li>
+                                                @{
+                                                    if (User.Identity.IsAuthenticated)
+                                                    {
+                                                        if (Model.UserId == Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type == "UserId").Value))
+                                                        {
+                                                            <span class="perc-back" style="width:@Math.Round(oran)%"></span>
+                                                            <input type="radio"
+                                                                   onchange="PollOptionChange(this)"
+                                                                   data-pollid="@Model.PollId"
+                                                                   name="poolOptionRadio-@Model.PollId"
+                                                                   data-optionid="@option.OptionId"
+                                                                   id="answer-@option.OptionId"
+                                                                   value="@option.Vote" disabled>
+
+                                                            <label for="answer-@option.OptionId">@option.Option</label>
+                                                            <span class="perc-number">@Math.Round(oran)%</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            if (Model.UserPollVote.IsVoted)
+                                                            {
+                                                                if (Model.UserPollVote.VoteId == option.OptionId)
+                                                                {
+                                                                    <span class="perc-back" style="width:@Math.Round(oran)%"></span>
+                                                                    <input type="radio"
+                                                                           onchange="PollOptionChange(this)"
+                                                                           data-pollid="@Model.PollId"
+                                                                           name="poolOptionRadio-@Model.PollId"
+                                                                           data-optionid="@option.OptionId"
+                                                                           id="answer-@option.OptionId"
+                                                                           value="@option.Vote" checked="checked">
+
+                                                                    <label for="answer-@option.OptionId">@option.Option</label>
+                                                                    <span class="perc-number">@Math.Round(oran)%</span>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span class="perc-back" style="width:@Math.Round(oran)%"></span>
+                                                                    <input type="radio"
+                                                                           onchange="PollOptionChange(this)"
+                                                                           data-pollid="@Model.PollId"
+                                                                           name="poolOptionRadio-@Model.PollId"
+                                                                           data-optionid="@option.OptionId"
+                                                                           id="answer-@option.OptionId"
+                                                                           value="@option.Vote" disabled>
+
+                                                                    <label for="answer-@option.OptionId">@option.Option</label>
+                                                                    <span class="perc-number">@Math.Round(oran)%</span>
+                                                                }
+
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="perc-back" style="width:@Math.Round(oran)% display:none"></span>
+                                                                <input type="radio"
+                                                                       onchange="PollOptionChange(this)"
+                                                                       data-pollid="@Model.PollId"
+                                                                       name="poolOptionRadio-@Model.PollId"
+                                                                       data-optionid="@option.OptionId"
+                                                                       id="answer-@option.OptionId"
+                                                                       value="@option.Vote">
+
+                                                                <label for="answer-@option.OptionId">@option.Option</label>
+                                                                <span class="perc-number" style="display:none">@Math.Round(oran)%</span>
+                                                            }
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="perc-back" style="width:@Math.Round(oran)%; display:none"> </span>
+                                                        <input type="radio"
+                                                               onchange="PollOptionChange(this)"
+                                                               data-pollid="@Model.PollId"
+                                                               name="poolOptionRadio-@Model.PollId"
+                                                               data-optionid="@option.OptionId"
+                                                               id="answer-@option.OptionId"
+                                                               value="@option.Vote">
+
+                                                        <label for="answer-@option.OptionId">@option.Option</label>
+                                                        <span class="perc-number" style="display:none">@Math.Round(oran)%</span>
+                                                    }
+                                                }
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+
+                                <h5>
+                                    @{
+                                        TimeSpan Sonuc = DateTime.Now - Model.PollEndDate.Value;
+                                    }
+                                    Bu anket için toplam <strong id="poolid-@Model.PollId">@Model.TotalPollVotes</strong> oy kullanıldı.Bitimine @Sonuc.ToString("d' gün 'h' saat 'm' dakika 's' saniye'")
+
+                                </h5>
+
+                                <div style="text-align:center; padding:5px; margin:5px;"><a href="/konu/@Model.PollOrGraphicUrl/@Model.Id" class="badge badge-pill badge-success font-size-16">Detaylar ve Yorumlar</a></div>
+                            }
+
+                        }
+                    }
+                    <div class="media-block-actions">
+                        <nav class="nav nav-dot-separated no-gutters">
+                            <div class="nav-item">
+                                <a class="nav-link text-success" data-commentid="@Model.Id" onclick="LikeOrDislike(this,1)" href="#"><i class="fa fa-thumbs-up"></i> (<span>@Model.LikeCount</span>)</a>
+                            </div>
+                            <div class="nav-item">
+                                <a class="nav-link text-danger" data-commentid="@Model.Id" onclick="LikeOrDislike(this,0)" href="#"><i class="fa fa-thumbs-down"></i> (<span>@Model.DislikeCount</span>)</a>
+                            </div>
+                            <div class="nav-item">
+                                <div class="media-hover-show">
+                                    <a class="nav-link text-success" href="#" data-toggle="tooltip" title="" data-original-title="Cevap Yaz" onclick="Reply(this)" data-commentId="@Model.Id" data-marketid="@Model.MarketId">
+                                        <i class="ion-chatbubble-working"></i> Cevap Yaz
+                                    </a>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+
+                @*Diğer Menü*@
+
+                @{
+                    if (User.Identity.IsAuthenticated && Model.UserId != ViewBag.UserId)
+                    {
+                        <div class="dropdown">
+                            <a data-toggle="dropdown" href="#" aria-expanded="false"><i class="ti-more-alt rotate-90 text-muted"></i></a>
+                            <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(14px, 19px, 0px); top: 0px; left: 0px; will-change: transform;">
+
+                                @if (!Model.IsSubscribe)
+                                {
+                                    <a class="dropdown-item" href="#" onclick="AddScribe(this,@Model.UserId,'comment')">
+                                        <i class="fa fa-user-plus"></i>
+                                        Takip Et
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a class="dropdown-item" href="#" onclick="UnScribe(this,@Model.UserId,'comment')">
+                                        <i class="fa fa-user-times"></i>
+                                        Takibi Bırak
+                                    </a>
+                                }
+                                <a class="dropdown-item" href="#" onclick="AddBlock(this,@Model.UserId)"><i class="fa fa-ban"></i> Engelle</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item AddComplaint" id="addComp" onclick="GetCommentId(this), ClearComplaintForm()" data-toggle="modal" data-target="#AddComplaintDiv" href="#" data-commentId="@Model.Id"><i class="fa fa-flash"></i> Şikayet Et</a>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+            @{
+                if (Model.CommentParentId != null)
+                {
+                    <div class="sub-comment" style="margin:5px 0 10px 30px" id="@Model.CommentParentId-parentCommentDiv">
+                        <a href="/Profil/@Model.ParentUsername" style="font-size:medium; color: #fbae1c;">@Model.ParentUsername</a> <strong>için cevaplandı.</strong> <button class="btn btn-rounded btn-success btn-xs" onclick="GetComment(@Model.CommentParentId,@Model.Id,this)">Oku</button>
+                    </div>
+
+                    if (Model.PollId != null || !String.IsNullOrEmpty(Model.Graphic))
+                    {
+                        <div style="text-align:center; padding:5px; margin:5px;"><a href="/konu/@Model.PollOrGraphicUrl/@Model.Id" class="badge badge-pill badge-success font-size-16">Detaylar ve Yorumlar</a></div>
+                    }
+                }
+            }
+        </div>
+    </div>
+}
+
+@await Component.InvokeAsync("ComplaintPopUp")
+
+@*<script src="~/js/comments.js"></script>*@
+
+<script>
+    /*Şikayet ekleme*/
+    $("#AddComplaint").validate({
+        rules:
+        {
+            description:
+            {
+                required: true,
+                minlength: 3,
+                maxlength: 5000
+            }
+        },
+        messages: {
+
+            description: {
+                required: "Lütfen açıklama yazınız",
+                minlength: "En az 3 karakter giriniz",
+                maxlength: "En fazla 5000 karakter giriniz"
+            }
+        },
+        submitHandler: function () {
+            var commentId = $("#ComplaintCommentId").val();
+            var topicId = $("#TopicId").val();
+            var description = $("#description").val();
+
+            $("#btnSend").html("Şikayetiniz iletiliyor...");
+            $("#btnSend").prop('disabled', true);
+
+            var model = {
+                CommentId: commentId,
+                TopicId: topicId,
+                Description: description
+            };
+            $.ajax({
+                type: 'POST',
+                url: '/Comment/AddComplaint',
+                data:
+                {
+                    'reqCommentComplaint': model
+                },
+                success: function (msg) {
+                    if (msg.status === true) {
+                        $("#AddComplaintResult").show().addClass("callout callout-success");
+                        $("#AddComplaintResult").html(msg.message);
+                        $("#btnSend").html("Gönder");
+                        $("#btnSend").prop('disabled', false);
+                        $("#AddComplaintResult").removeClass("callout-danger");
+                    }
+                    else {
+                        $("#AddComplaintResult").show().addClass("callout callout-danger");
+                        $("#AddComplaintResult").html(msg.message);
+                        $("#btnSend").html("Gönder");
+                        $("#btnSend").prop('disabled', false)
+                        $("#AddComplaintResult").removeClass("callout-success");
+                    }
+                },
+                error: function () {
+                    $("#AddComplaintResult").show().addClass("callout callout-danger");
+                    $("#AddComplaintResult").html(errmsg);
+                    $("#btnSend").html("Gönder");
+                    $("#btnSend").prop('disabled', false);
+                }
+            });
+            return false;
+        }
+    });
+
+    /*Şikayet edilecek yorumun Id'sini getirir.*/
+    function GetCommentId(element) {
+        var a = $(element).data("commentid")
+        $("#ComplaintCommentId").attr("value", a);
+    }
+
+    /*Formu temizler*/
+    function ClearComplaintForm() {
+        $("#AddComplaintResult").text("");
+        $("#AddComplaintResult").removeClass("callout callout-danger");
+        $("#AddComplaintResult").removeClass("callout callout-success");
+        $("#description").val("");
+    }
+
+    /*Yazılabilecek kalan karakter sayısını hesaplayıp kullanıcıya gösterme*/
+    function MessageControl(element) {
+        //var comment = element.value;
+        //var indexOf = comment.indexOf("@@");
+
+        //console.log(indexOf);
+
+        //var s = comment.substr(comment.length - indexOf, indexOf + 1);
+        //console.log(s.split("@@")[1]);
+
+        var characterLimit = 5000;
+        var messageLength = element.value.length;
+        if (characterLimit >= messageLength) {
+            var remaining = characterLimit - messageLength;
+            $(element).parent().find(".lblCommentCharacterCount").html(" " + remaining);
+
+        } else {
+            element.value = element.value.substr(0, characterLimit);
+        }
+        //var regex = "/\@@[a-z]+/g";
+        //const regex = /\@@[a-z]+/g;
+
+        //let m;
+
+        //while ((m = regex.exec(element.value)) !== null)
+        //{
+        //    // This is necessary to avoid infinite loops with zero-width matches
+        //    if (m.index === regex.lastIndex)
+        //    {
+        //        regex.lastIndex++;
+
+        //    }
+
+        //    // The result can be accessed through the `m`-variable.
+        //    m.forEach((match, groupIndex) =>
+        //    {
+        //        //console.log(`Found match, group ${groupIndex}: ${match}`);
+        //        console.log(match);
+        //    });
+        //}
+        //}
+        /*Kullanıcının yazdığı yorum localde tutuluyor.*/
+        //localStorage.removeItem("localComment");
+        //localStorage.setItem("localComment", element.value.substr(0, characterLimit));
+    }
+
+</script>

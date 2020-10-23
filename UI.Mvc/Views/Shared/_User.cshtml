@@ -1,0 +1,6 @@
+﻿@{
+    if (User.Identity.IsAuthenticated)
+    {
+        @await Component.InvokeAsync("DropdownUserMenu")
+    }
+}

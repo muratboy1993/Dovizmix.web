@@ -1,0 +1,123 @@
+@{
+    ViewData["Title"] = "Ekonomik Takvim";
+    ViewData["Description"] = "Ülkelerin önem dereceleriyle birlikte ekonomiyi etkileyen olayları gösteren sayfa";
+    ViewData["Keywords"] = "ekonomik, takvim, dovizmix, ülkeler, beklenen, önceki, açıklanan, bayrak, önem, derecesi";
+}
+
+
+@*<link rel="stylesheet" href="/assets/flags/flag.css" />*@
+<!-- daterange picker -->
+<link rel="stylesheet" href="~/assets/vendor_components/bootstrap-daterangepicker/daterangepicker.css">
+<link rel="stylesheet" href="~/css/EconomicCalendar.css" />
+
+
+
+<div class="box collapsed-box ">
+    <div class="box-header with-border">
+        <h4 class="box-title">Filtrele</h4>
+
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="fa fa-plus"></i>
+            </button>
+        </div>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <div class="pull-left">
+            <span>Önem Derecesi</span>
+            <ul class="ulImportants" style="margin-top: 10px;">
+
+
+                @for (int i = 1; i <= 3; i++)
+                {
+                    <li>
+                        <input id="important-@i" name="CalendarPageImportants" type="checkbox" value="@i" checked="checked" />
+
+                        <label for="important-@i">
+                            @for (int b = 0; b < i; b++)
+                            {
+
+                                <i style="font-size:17px" class="fa fa-exclamation"></i>
+
+                            }
+                        </label>
+                    </li>
+                }
+
+            </ul>
+        </div>
+        <div class="clearfix economicdatepicker">
+            <div class="col-md-5 pull-right"><span>Tarih Seç : </span><input type="text" name="EconomicCalendarPageDate" class="form-control" id="EconomicCalendarPageDate" /></div>
+        </div>
+        <div>
+
+            <div class="pull-left ulkesec">
+                <h4>Ülke Seç</h4>
+                <button type="button" class="btn btn-success btn-xs checkallcountry">Tümünü Seç</button>
+                <button type="button" class="btn btn-default  btn-xs uncheckallcountry">Temizle</button>
+            </div>
+
+        </div>
+
+        <div class="ecoFilterBox">
+            <ul class="countryOption">
+
+                @foreach (var item in (List<Common.Model.Country.Response.ResCalendarCountry>)ViewBag.Countires)
+                {
+                    <li>
+                        <input type="checkbox" class="checkbox" checked name="CalendarPageCountry" value="@item.CountryId">
+                        <span class="ceFlags @item.CountryFlagCode">&nbsp;</span><label for="country-@item.CountryId">@item.CountryName</label>
+                    </li>
+                }
+            </ul>
+
+        </div>
+
+
+    </div>
+
+    <div class="box-footer">
+        <button type="button" id="btnEconomicCalendarPageFilter" class="btn btn-success pull-right">Getir</button>
+    </div>
+
+</div>
+
+<div class="box">
+    <div class="body">
+        <div class="table-responsive showEconomicCalendar">
+            <table id="tblEconomicCalendar" class="table table-bordered table-striped"></table>
+        </div>
+    </div>
+</div>
+
+<div class="col-12">
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Bitcoin Exchange ETH/BTC</h3>
+
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="" data-original-title="Remove">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="chart">
+                <div id="chartdiv2" style="height: 500px;"></div>
+            </div>
+        </div>
+        <!-- /.box-body -->
+    </div>
+</div>
+
+
+<!-- date-range-picker -->
+<script src="~/assets/vendor_components/moment/min/moment.min.js"></script>
+<script src="~/assets/vendor_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+<!-- bootstrap datepicker -->
+<script src="~/assets/vendor_plugins/DataTables-1.10.15/media/js/jquery.dataTables.min.js"></script>
+<script src="~/js/economicCalendar.js"></script>

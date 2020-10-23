@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewData["Title"] = "Ekonomik Grafik Formasyonu";
+    ViewData["Description"] = "Ekonomi hakkında bilmeniz gereken tüm grafikleri listeleyen sözlük alanı";
+    ViewData["Keywords"] = "ekonomik, takvim, dovizmix, formasyon, ülkeler, eğriler";
+}
+
+<link rel="stylesheet" type="text/css" href="~/css/tools.css" />
+
+<ul class="breadcrumb">
+    <li><a href="/">Anasayfa</a></li>
+    <li class="active">Formasyonlar</li>
+</ul>
+
+<div class="toolbar mb2 mt2 pagination">
+    <a class="fil-cat" href="#" data-rel="Tumu">Tümü</a>
+    @foreach (var item in ViewBag.Categories)
+    {
+        <a href="#" class="fil-cat" data-rel="@item">@item</a>
+    }
+</div>
+
+<div style="clear:both;"></div>
+<div id="portfolio">
+    <div class="row" id="filter">
+
+        @foreach (var item in ViewBag.Categories)
+        {
+            <div class="tile scale-anm bcards Tumu col-sm-3 @item">
+                <h1>@item</h1>
+                @foreach (var item2 in ViewBag.Formations)
+                {
+                    if (item2.Category == item)
+                    {
+                        <a href="/Araclar/formasyonlar/@item2.Seourl">@item2.Name</a>
+                        <br />
+                    }
+                }
+            </div>
+        }
+        </div>
+    </div>
+    <div style="clear:both;"></div>
+
+    <script src="~/js/tools.js"></script>

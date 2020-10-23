@@ -1,0 +1,55 @@
+﻿@{
+    Layout = null;
+}
+@model List<Common.Model.EconomicCalendar.Response.ResEconomicWidget>;
+
+<div class="box">
+    <div class="box-header with-border">
+        <div class="pull-left"><h5><b>Ekonomide Bugün</b></h5></div><div class="pull-right">
+        </div>
+    </div>
+
+    @if (Model.Count != 0)
+    {<!-- /.box-header -->
+        <div class="box-body ">
+            <div class="slimScrollAdd" style="height:350px">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th rowspan=1>Ülke</th>
+                                <th rowspan=1>Önem</th>
+                                <th rowspan=3>Konu</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <th colspan=1><img alt="@item.CountryName" src="~/assets/Flags/blank.gif" class="ceFlags @item.CountryFlagCode"></th>
+                                    <th colspan=1>
+                                        @for (int i = 1; i <= item.Important; i++)
+                                        {
+                                            <i style="font-size:17px" class="fa fa-exclamation"></i>
+                                        }
+                                    </th>
+                                    <th colspan=3>@item.Subject</th>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- /.box-body -->
+    }
+    else
+    {
+        <div style="text-align:center;">
+            <div class="media-body">
+                <p class="eco-widget">Planlanmış Etkinlik Bulunmamaktadır.</p>
+            </div>
+        </div>
+    }
+</div>
