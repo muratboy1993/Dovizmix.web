@@ -1,0 +1,9 @@
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Validation\bin\Debug\netcoreapp2.2\Infrastructure.Validation.deps.json
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Validation\bin\Debug\netcoreapp2.2\Infrastructure.Validation.dll
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Validation\bin\Debug\netcoreapp2.2\Infrastructure.Validation.pdb
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Validation\obj\Debug\netcoreapp2.2\Infrastructure.Validation.csproj.CoreCompileInputs.cache
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Validation\obj\Debug\netcoreapp2.2\Infrastructure.Validation.AssemblyInfoInputs.cache
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Validation\obj\Debug\netcoreapp2.2\Infrastructure.Validation.AssemblyInfo.cs
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Validation\obj\Debug\netcoreapp2.2\Infrastructure.Validation.dll
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Validation\obj\Debug\netcoreapp2.2\Infrastructure.Validation.pdb
+C:\tfs\DovizApp\Dev\DovizApp\Infrastructure.Validation\obj\Debug\netcoreapp2.2\Infrastructure.Validation.csprojAssemblyReference.cache
