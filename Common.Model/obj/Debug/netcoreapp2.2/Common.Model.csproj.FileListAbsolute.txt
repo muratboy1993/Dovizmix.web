@@ -1,0 +1,29 @@
+C:\tfs\DovizApp\Dev\DovizApp\Common.Model\bin\Debug\netcoreapp2.2\Common.Model.deps.json
+C:\tfs\DovizApp\Dev\DovizApp\Common.Model\bin\Debug\netcoreapp2.2\Common.Model.dll
+C:\tfs\DovizApp\Dev\DovizApp\Common.Model\bin\Debug\netcoreapp2.2\Common.Model.pdb
+C:\tfs\DovizApp\Dev\DovizApp\Common.Model\obj\Debug\netcoreapp2.2\Common.Model.csproj.CoreCompileInputs.cache
+C:\tfs\DovizApp\Dev\DovizApp\Common.Model\obj\Debug\netcoreapp2.2\Common.Model.AssemblyInfoInputs.cache
+C:\tfs\DovizApp\Dev\DovizApp\Common.Model\obj\Debug\netcoreapp2.2\Common.Model.AssemblyInfo.cs
+C:\tfs\DovizApp\Dev\DovizApp\Common.Model\obj\Debug\netcoreapp2.2\Common.Model.dll
+C:\tfs\DovizApp\Dev\DovizApp\Common.Model\obj\Debug\netcoreapp2.2\Common.Model.pdb
+C:\tfs\DovizApp\Dev\DovizApp\Common.Model\obj\Debug\netcoreapp2.2\Common.Model.csprojAssemblyReference.cache
+D:\VS\DovizApp\Common.Model\bin\Debug\netcoreapp2.2\Common.Model.deps.json
+D:\VS\DovizApp\Common.Model\bin\Debug\netcoreapp2.2\Common.Model.dll
+D:\VS\DovizApp\Common.Model\bin\Debug\netcoreapp2.2\Common.Model.pdb
+D:\VS\DovizApp\Common.Model\obj\Debug\netcoreapp2.2\Common.Model.csprojAssemblyReference.cache
+D:\VS\DovizApp\Common.Model\obj\Debug\netcoreapp2.2\Common.Model.AssemblyInfoInputs.cache
+D:\VS\DovizApp\Common.Model\obj\Debug\netcoreapp2.2\Common.Model.AssemblyInfo.cs
+D:\VS\DovizApp\Common.Model\obj\Debug\netcoreapp2.2\Common.Model.dll
+D:\VS\DovizApp\Common.Model\obj\Debug\netcoreapp2.2\Common.Model.pdb
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Common.Model\bin\Debug\netcoreapp2.2\Common.Model.deps.json
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Common.Model\bin\Debug\netcoreapp2.2\Common.Model.dll
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Common.Model\bin\Debug\netcoreapp2.2\Common.Model.pdb
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Common.Model\obj\Debug\netcoreapp2.2\Common.Model.csprojAssemblyReference.cache
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Common.Model\obj\Debug\netcoreapp2.2\Common.Model.AssemblyInfoInputs.cache
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Common.Model\obj\Debug\netcoreapp2.2\Common.Model.AssemblyInfo.cs
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Common.Model\obj\Debug\netcoreapp2.2\Common.Model.dll
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Common.Model\obj\Debug\netcoreapp2.2\Common.Model.pdb
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Common.Model\bin\Debug\netcoreapp2.2\Common.Model.runtimeconfig.json
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Common.Model\bin\Debug\netcoreapp2.2\Common.Model.runtimeconfig.dev.json
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Common.Model\obj\Debug\netcoreapp2.2\Common.Model.genruntimeconfig.cache
+C:\Users\exorc\OneDrive\Masaüstü\Yeni klasör (2)\DovizApp\Common.Model\obj\Debug\netcoreapp2.2\Common.Model.csproj.CoreCompileInputs.cache
